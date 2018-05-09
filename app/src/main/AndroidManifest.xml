@@ -16,7 +16,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".OnBoard1"></activity>
+        <activity android:name=".OnBoard.OnBoard1" />
+        <activity android:name=".OnBoard.OnBoard2"></activity>
     </application>
 
 </manifest>

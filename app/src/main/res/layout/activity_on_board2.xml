@@ -5,43 +5,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".OnBoard.OnBoard1">
+    tools:context=".OnBoard.OnBoard2">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Caffeine has an average half-life of 4-6 hours."/>
+        android:text="Determine daily caffeine"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="If you consume 100mg worth of caffeine"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="After 4-6 hours, there will still be 50mg in your system"/>
-
-    <TextView
-        android:id="@+id/tvHalfLife"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set half-life "/>
+        android:text="Answering the optional questions will help determine what your maximum caffwine in-take should be."/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="6"
-        android:layout_toRightOf="@+id/tvHalfLife"/>
+        android:hint="Age"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="hours"/>
+        android:text="Pregnant"/>
 
-    <Button
+    <CheckBox
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="NEXT"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
