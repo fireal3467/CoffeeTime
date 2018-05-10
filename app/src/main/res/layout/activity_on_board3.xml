@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".OnBoard.OnBoard3">
+    tools:context=".onboard.OnBoard3">
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,9 +19,9 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="9 hours"
-            app:et_helper="Sleep goal"
-            />
+            android:hint="9 hours"/>
+            <!--app:et_helper="Sleep goal"-->
+
     </android.support.design.widget.TextInputLayout>
 
     <TextView
@@ -62,43 +62,50 @@
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="10:00 AM"
-            app:et_helper="Monday"/>
+            android:hint="10:00 AM" />
+            <!--app:et_helper="Monday"-->
+
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="10:00 AM"
-            app:et_helper="Tuesday"/>
+            android:hint="10:00 AM"/>
+            <!--app:et_helper="Tuesday"-->
+
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="10:00 AM"
-            app:et_helper="Wednesday"/>
+            android:hint="10:00 AM"/>
+            <!--app:et_helper="Wednesday"-->
+
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="10:00 AM"
-            app:et_helper="Thursday"/>
+            android:hint="10:00 AM"/>
+            <!--app:et_helper="Thursday"-->
+
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="10:00 AM"
-            app:et_helper="Friday"/>
+            android:hint="10:00 AM"/>
+            <!--app:et_helper="Friday"-->
+
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="10:00 AM"
-            app:et_helper="Saturday"/>
+            android:hint="10:00 AM"/>
+            <!--app:et_helper="Saturday"-->
+
 
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="10:00 AM"
-            app:et_helper="Sunday"/>
+            android:hint="10:00 AM"/>
+            <!--app:et_helper="Sunday"-->
+
     </android.support.design.widget.TextInputLayout>
 </LinearLayout>

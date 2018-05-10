@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".OnBoard.OnBoard2"
+    tools:context=".onboard.OnBoard2"
     android:padding="10dp">
 
     <TextView
@@ -27,8 +27,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Age"
-            app:et_helper="Optional"/>
+            android:hint="Age"/>
+            <!--app:et_helper="Optional"-->
     </android.support.design.widget.TextInputLayout>
 
     <TextView
