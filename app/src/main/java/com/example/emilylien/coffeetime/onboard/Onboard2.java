@@ -7,7 +7,7 @@ import com.example.emilylien.coffeetime.R;
 
 
 
-public class OnBoard2 extends AppCompatActivity {
+public class Onboard2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

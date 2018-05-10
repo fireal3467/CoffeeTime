@@ -10,7 +10,7 @@ import com.example.emilylien.coffeetime.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class OnBoard1 extends AppCompatActivity {
+public class Onboard1 extends AppCompatActivity {
     @BindView(R.id.pager) ViewPager viewPager;
     @BindView(R.id.tabDots) TabLayout tabLayout;
 
