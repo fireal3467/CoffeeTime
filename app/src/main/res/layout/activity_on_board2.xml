@@ -1,37 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <!--android:fillViewport="true">-->
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:fillViewport="true"
+        >
 
         <RelativeLayout
             android:id="@+id/rlLayout"
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context=".onboard.OnBoard2"
-            android:padding="15dp">
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvDailyLimits"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Recommended limit"
-                android:layout_centerHorizontal="true"
-                android:textSize="23sp"
-                android:textColor="#000000"/>
+            android:id="@+id/tvDailyLimits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Recommended limit"
+            android:layout_centerHorizontal="true"
+            android:textSize="23sp"
+            android:textColor="#000000"/>
 
             <TextView
                 android:id="@+id/tvRecommendedLimitDescription"
@@ -42,6 +41,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:text="Answering the optional questions will help determine what your maximum caffeine in-take should be."/>
+
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/tilAge"
@@ -102,7 +102,7 @@
                     android:layout_weight="1"/>
             </LinearLayout>
 
-        <TextView
+            <TextView
             android:id="@+id/tvSetDailyCaffeineIntakeTitle"
             android:layout_below="@+id/llRecommendedDailyLimit"
             android:layout_width="wrap_content"
@@ -136,16 +136,20 @@
 
             <Button
                 android:id="@+id/btnOnboard2Back"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
+                android:layout_below="@id/tilMaximum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="BACK"/>
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:text="BACK" />
 
             <Button
                 android:id="@+id/btnOnboard2Next"
+                android:layout_below="@id/tilMinimum"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="NEXT"/>

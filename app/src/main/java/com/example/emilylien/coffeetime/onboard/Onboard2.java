@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class OnBoard2 extends AppCompatActivity {
+public class Onboard2 extends AppCompatActivity {
     @BindView(R.id.btnOnboard2Next) Button btnOnboard2Next;
     @BindView(R.id.btnOnboard2Back) Button btnOnboard2Back;
     @BindView(R.id.tilAge) MaterialEditText tilAge;
@@ -51,12 +51,12 @@ public class OnBoard2 extends AppCompatActivity {
     }
 
     @OnClick(R.id.btnOnboard2Next) void nextClicked() {
-        Intent intent = new Intent(OnBoard2.this, OnBoard3.class);
+        Intent intent = new Intent(Onboard2.this, Onboard3.class);
         startActivity(intent);
     }
 
     @OnClick(R.id.btnOnboard2Back) void backClicked() {
-        Intent intent = new Intent(OnBoard2.this, OnBoard1.class);
+        Intent intent = new Intent(Onboard2.this, Onboard1.class);
         startActivity(intent);
     }
 

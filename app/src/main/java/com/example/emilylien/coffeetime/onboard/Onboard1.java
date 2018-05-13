@@ -13,7 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OnBoard1 extends AppCompatActivity {
+public class Onboard1 extends AppCompatActivity {
     @BindView(R.id.btnOnboard1Next) Button btnOnboard1Next;
 
     @Override
@@ -24,7 +24,7 @@ public class OnBoard1 extends AppCompatActivity {
     }
 
     @OnClick(R.id.btnOnboard1Next) void clickedNext() {
-        Intent intent = new Intent(OnBoard1.this, OnBoard2.class);
+        Intent intent = new Intent(Onboard1.this, Onboard2.class);
         startActivity(intent);
     }
 }

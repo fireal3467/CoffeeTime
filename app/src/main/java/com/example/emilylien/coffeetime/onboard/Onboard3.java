@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.example.emilylien.coffeetime.R;
 
-public class OnBoard3 extends AppCompatActivity {
+public class Onboard3 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
