@@ -1,43 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".onboard.OnBoard2"
-    android:padding="10dp">
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recommended limit"
-        android:textSize="23sp"
-        android:textColor="#000000"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10sp"
-        android:text="Answering the optional questions will help determine what your maximum caffwine in-take should be."/>
-
-    <android.support.design.widget.TextInputLayout
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <EditText
+        android:layout_height="match_parent">
+        <!--android:fillViewport="true">-->
+
+        <RelativeLayout
+            android:id="@+id/rlLayout"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".onboard.OnBoard2"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/tvDailyLimits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Recommended limit"
+                android:layout_centerHorizontal="true"
+                android:textSize="23sp"
+                android:textColor="#000000"/>
+
+            <TextView
+                android:id="@+id/tvRecommendedLimitDescription"
+                android:layout_below="@+id/tvDailyLimits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:text="Answering the optional questions will help determine what your maximum caffeine in-take should be."/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/tilAge"
+                android:layout_below="@id/tvRecommendedLimitDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Age"
+                android:hint="Age"
+                android:inputType="number"
+                app:met_helperText="Optional">
+            </com.rengwuxian.materialedittext.MaterialEditText>
+
+            <TextView
+                android:id="@+id/tvPregnant"
+                android:layout_below="@+id/tilAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginTop="15dp"
+                android:text="Pregnant: "/>
+
+            <Switch
+                android:id="@+id/switchPregnant"
+                android:layout_toRightOf="@+id/tvPregnant"
+                android:layout_below="@id/tilAge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+
+            <LinearLayout
+                android:id="@+id/llRecommendedDailyLimit"
+                android:layout_below="@id/switchPregnant"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="15dp"
+                android:weightSum="2">
+
+                <TextView
+                    android:id="@+id/tvRecommendedDailyLimitPrompt"
+                    android:layout_below="@id/switchPregnant"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:layout_gravity="fill"
+                    android:text="Recommended daily caffeine limit:" />
+
+                <TextView
+                    android:id="@+id/tvRecommendedDailyLimitAnswer"
+                    android:textSize="23sp"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="400mg"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvSetDailyCaffeineIntakeTitle"
+            android:layout_below="@+id/llRecommendedDailyLimit"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Age"/>
-            <!--app:et_helper="Optional"-->
-    </android.support.design.widget.TextInputLayout>
+            android:textSize="23sp"
+            android:text="Set daily caffeine intake"
+           />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Pregnant: "/>
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/tilMinimum"
+                android:layout_below="@id/tvSetDailyCaffeineIntakeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Minimum"
+                android:inputType="numberDecimal"
+                android:layout_marginTop="10dp"
+                android:hint="Minimum">
+            </com.rengwuxian.materialedittext.MaterialEditText>
 
-    <Switch
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:id="@+id/tilMaximum"
+                android:layout_below="@id/tilMinimum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:met_floatingLabel="highlight"
+                android:inputType="numberDecimal"
+                app:met_floatingLabelText="Maximum"
+                android:hint="Maximum">
+            </com.rengwuxian.materialedittext.MaterialEditText>
 
+            <Button
+                android:id="@+id/btnOnboard2Back"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="BACK"/>
+
+            <Button
+                android:id="@+id/btnOnboard2Next"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NEXT"/>
+        </RelativeLayout>
+    </ScrollView>
 </LinearLayout>
