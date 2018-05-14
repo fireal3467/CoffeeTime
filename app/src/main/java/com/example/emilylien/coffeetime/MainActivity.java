@@ -51,9 +51,8 @@ public class MainActivity extends AppCompatActivity
 
                 if (id == R.id.fab_add_drink) {
                     //Open a new activity for drinking
-//                    Intent intent = new Intent(MainActivity.this,)
-
-
+                    Intent intent = new Intent(MainActivity.this, AddDrinkActivity.class);
+                    startActivity(intent);
                 }
 
                 fabSpeedDial.closeMenu();
