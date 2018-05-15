@@ -21,7 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.emilylien.coffeetime.adapter.AddDrinkAdapter;
+import com.example.emilylien.coffeetime.data.AppDatabase;
 import com.example.emilylien.coffeetime.data.DrinkInfo;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AddDrinkActivity extends AppCompatActivity implements AddDrinkTypeDialog.AddDrinkTypeInterface{
 
@@ -62,8 +66,22 @@ public class AddDrinkActivity extends AppCompatActivity implements AddDrinkTypeD
 
 
     @Override
-    public void addDrinkType(DrinkInfo drink, int sectionNumber) {
+    public void addDrinkType(final DrinkInfo drink, final int sectionNumber) {
         Toast.makeText(this, "Added a New Drink Type", Toast.LENGTH_SHORT).show();
-        addDrinkAdapter.addDrinkType(drink,sectionNumber);
+        new Thread(){
+            @Override
+            public void run() {
+                long id = AppDatabase.getAppDatabase(AddDrinkActivity.this).
+                        drinkDAO().insertDrink(drink);
+                drink.setDrinkID(id);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        addDrinkAdapter.addDrinkType(drink,sectionNumber);
+                    }
+                });
+            }
+        }.start();
     }
 }

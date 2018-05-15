@@ -77,9 +77,12 @@ public class AddDrinkTypeDialog extends DialogFragment {
         addBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                DrinkInfo newDrink = new DrinkInfo(drinkName.getText().toString(),
+                DrinkInfo newDrink = new DrinkInfo(
+                        drinkName.getText().toString(),
                         drinkSize.getText().toString(),
-                        Integer.parseInt(caffineAmount.getText().toString()));
+                        Integer.parseInt(caffineAmount.getText().toString()),
+                        sectionNum
+                );
                 addDrinkTypeInterface.addDrinkType(newDrink, sectionNum);
                 dismiss();
             }

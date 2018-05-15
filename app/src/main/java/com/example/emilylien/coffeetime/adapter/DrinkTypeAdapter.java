@@ -26,16 +26,18 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
     public static final String DRINK_CHOICE = "DRINK_CHOICE";
     private List<DrinkInfo> drinkList;
     private Context context;
+    private int category;
 
     /*
     @param drinkList - should contain all the prerecorded default drinks to be added
                        in addition to any custom drinks added
      */
-    public DrinkTypeAdapter(List<DrinkInfo> drinkList, Context context){
+    public DrinkTypeAdapter(List<DrinkInfo> drinkList, Context context, int category){
         this.drinkList = drinkList;
         this.context = context;
-        drinkList.add(new DrinkInfo("drink1", "100 ml", 300));
-        drinkList.add(new DrinkInfo("drink2", "500 ml", 200));
+        this.category = category;
+        drinkList.add(new DrinkInfo("drink1", "100 ml", 300, category));
+        drinkList.add(new DrinkInfo("drink2", "500 ml", 200, category));
     }
 
     @Override
@@ -78,7 +80,7 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
     }
 
     public void addDrinkType(DrinkInfo drink){
-        drinkList.add(drink);
+        drinkList.add(0, drink);
         notifyDataSetChanged();
     }
 
@@ -90,6 +92,4 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
             drinkName = itemView.findViewById(R.id.drinkName);
         }
     }
-
-
 }

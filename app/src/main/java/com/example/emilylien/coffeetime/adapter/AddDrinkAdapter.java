@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.example.emilylien.coffeetime.AddDrinkActivity;
 import com.example.emilylien.coffeetime.AddDrinkTypeDialog;
 import com.example.emilylien.coffeetime.R;
+import com.example.emilylien.coffeetime.data.AppDatabase;
 import com.example.emilylien.coffeetime.data.DrinkInfo;
 
 import java.util.ArrayList;
@@ -28,9 +30,12 @@ import java.util.List;
 public class AddDrinkAdapter extends FragmentPagerAdapter{
 
     public static final String SECTION_NUMBER = "SECTION_NUMBER";
+
+
+
     private final List<DrinkSelectionFragment> fragmentList = new ArrayList<>();
 
-    FragmentManager fm;
+    private FragmentManager fm;
 
     public AddDrinkAdapter(FragmentManager fm) {
         super(fm);
@@ -89,6 +94,7 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
         private int sectionNumber;
         private DrinkTypeAdapter drinkTypeAdapter;
         public AddDrinkAdapter parentAdapter;
+        private RecyclerView recyclerView;
 
 
         public DrinkSelectionFragment() {
@@ -127,17 +133,36 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
                 }
             });
 
-
-            RecyclerView recyclerView = rootView.findViewById(R.id.recyclerList);
+            recyclerView = rootView.findViewById(R.id.recyclerList);
             recyclerView.setHasFixedSize(true);
             //TODO - this may not be safe, look into this later
             recyclerView.setLayoutManager(
                     new LinearLayoutManager(getActivity()));
-            drinkTypeAdapter = new DrinkTypeAdapter(new ArrayList(), getActivity());
-            recyclerView.setAdapter(drinkTypeAdapter);
+
+            initDrinks();
 
             return rootView;
         }
+
+
+        private void initDrinks(){
+            new Thread(){
+                @Override
+                public void run() {
+                    final List<DrinkInfo> drinks =
+                            AppDatabase.getAppDatabase(getActivity()).drinkDAO().getAllForCategory(sectionNumber);
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            drinkTypeAdapter = new DrinkTypeAdapter(drinks, getActivity(), sectionNumber);
+                            recyclerView.setAdapter(drinkTypeAdapter);
+                        }
+                    });
+                }
+            }.start();
+        }
+
 
 
         public String getSectionName() {
