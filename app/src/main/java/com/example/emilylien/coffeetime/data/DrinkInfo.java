@@ -1,10 +1,12 @@
 package com.example.emilylien.coffeetime.data;
 
+import java.io.Serializable;
+
 /**
  * Created by alanyu on 5/14/18.
  */
 
-public class DrinkInfo {
+public class DrinkInfo implements Serializable{
 
     private String drinkName;
 

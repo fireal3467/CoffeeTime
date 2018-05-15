@@ -20,8 +20,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.emilylien.coffeetime.adapter.AddDrinkAdapter;
+import com.example.emilylien.coffeetime.data.DrinkInfo;
 
-public class AddDrinkActivity extends AppCompatActivity {
+public class AddDrinkActivity extends AppCompatActivity implements AddDrinkTypeDialog.AddDrinkTypeInterface{
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -56,18 +57,7 @@ public class AddDrinkActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -91,4 +81,9 @@ public class AddDrinkActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    public void addDrinkType(DrinkInfo drink) {
+
+    }
 }

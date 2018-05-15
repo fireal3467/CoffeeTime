@@ -1,6 +1,7 @@
 package com.example.emilylien.coffeetime.adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.emilylien.coffeetime.AddDrinkActivity;
+import com.example.emilylien.coffeetime.AddDrinkDialog;
 import com.example.emilylien.coffeetime.R;
 import com.example.emilylien.coffeetime.data.DrinkInfo;
 
@@ -18,13 +21,17 @@ import java.util.List;
  */
 
 
-
 public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.ViewHolder>{
 
+    public static final String DRINK_CHOICE = "DRINK_CHOICE";
     private List<DrinkInfo> drinkList;
     private Context context;
 
 
+    /*
+    @param drinkList - should contain all the prerecorded default drinks to be added
+                       in addition to any custom drinks added
+     */
     public DrinkTypeAdapter(List<DrinkInfo> drinkList, Context context){
         this.drinkList = drinkList;
         this.context = context;
@@ -48,7 +55,22 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
     }
 
     private void setOnClickListeners(final ViewHolder holder, final int position) {
-        //TODO - add a dialog fragment to popup
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddDrinkDialog newDialog = new AddDrinkDialog();
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(
+                        DRINK_CHOICE,
+                        drinkList.get(holder.getAdapterPosition()));
+                newDialog.setArguments(bundle);
+
+                //TODO: check this doesn't
+                // break anything
+                newDialog.show(((AddDrinkActivity)context).getSupportFragmentManager()
+                        , "AddDrink");
+            }
+        });
     }
 
 
@@ -56,7 +78,6 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
     public int getItemCount() {
         return drinkList.size();
     }
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private TextView drinkName;
@@ -66,4 +87,6 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
             drinkName = itemView.findViewById(R.id.drinkName);
         }
     }
+
+
 }
