@@ -98,6 +98,14 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void setTvCurrInYouText(String currInYouText) {
+        this.tvCurrInYou.setText(currInYouText + "mg in body");
+    }
+
+    public void setTvHowMuchMore(String howMuchMoreText) {
+        this.tvHowMuchMore.setText("Can take in " + howMuchMoreText + "mg");
+    }
+
     public int extractCurrInYou() {
         return extractNumber(tvCurrInYou.getText().toString());
     }
