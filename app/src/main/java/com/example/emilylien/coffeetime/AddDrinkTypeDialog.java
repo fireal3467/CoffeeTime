@@ -40,9 +40,7 @@ public class AddDrinkTypeDialog extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
 
-        System.out.println("\n\n\n LOOK HERE");
         System.out.println(context.getClass().getName());
-        System.out.println("LOOK HERE \n\n\n");
 
         if (context instanceof AddDrinkTypeInterface) {
             addDrinkTypeInterface = (AddDrinkTypeInterface)context;

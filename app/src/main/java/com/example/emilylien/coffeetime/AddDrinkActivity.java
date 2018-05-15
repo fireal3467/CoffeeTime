@@ -1,5 +1,6 @@
 package com.example.emilylien.coffeetime;
 
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -29,20 +30,11 @@ import java.util.Date;
 
 public class AddDrinkActivity extends AppCompatActivity implements AddDrinkTypeDialog.AddDrinkTypeInterface{
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+
+    public static final String CHOSEN_DRINK = "CHOSEN_DRINK";
     private AddDrinkAdapter addDrinkAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private ViewPager mViewPager;
+    ViewPager mViewPager;
     private TabLayout tabLayout;
 
     @Override
@@ -52,11 +44,8 @@ public class AddDrinkActivity extends AppCompatActivity implements AddDrinkTypeD
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
         addDrinkAdapter = new AddDrinkAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(addDrinkAdapter);
 
@@ -67,7 +56,6 @@ public class AddDrinkActivity extends AppCompatActivity implements AddDrinkTypeD
 
     @Override
     public void addDrinkType(final DrinkInfo drink, final int sectionNumber) {
-        Toast.makeText(this, "Added a New Drink Type", Toast.LENGTH_SHORT).show();
         new Thread(){
             @Override
             public void run() {
@@ -84,4 +72,18 @@ public class AddDrinkActivity extends AppCompatActivity implements AddDrinkTypeD
             }
         }.start();
     }
+
+
+    public void addDrink(final DrinkInfo drink){
+        Intent intent = new Intent();
+        Bundle bundle = new Bundle();
+        System.out.println("AddDrink Here");
+        System.out.println(drink.getDrinkName());
+
+        bundle.putSerializable(CHOSEN_DRINK, drink);
+        intent.putExtras(bundle);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
 }

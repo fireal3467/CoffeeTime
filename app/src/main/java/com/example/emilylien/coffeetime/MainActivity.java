@@ -8,12 +8,25 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.emilylien.coffeetime.R;
+import com.example.emilylien.coffeetime.data.AppDatabase;
+import com.example.emilylien.coffeetime.data.DrinkInfo;
+import com.example.emilylien.coffeetime.data.TakenDrink;
+
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -21,21 +34,58 @@ import butterknife.OnClick;
 import io.github.yavski.fabspeeddial.FabSpeedDial;
 import io.github.yavski.fabspeeddial.SimpleMenuListenerAdapter;
 
+import static com.example.emilylien.coffeetime.AddDrinkActivity.CHOSEN_DRINK;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
+
     @BindView(R.id.tvHowMuchMore) TextView tvHowMuchMore;
     @BindView(R.id.tvCurrInYou) TextView tvCurrInYou;
+
+    private List<TakenDrink> takenDrinks;
+    private List<DrinkInfo> recentDrinks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
+        initDrawerSettings(toolbar);
+        initFabSettings();
 
+        initLists();
+
+    }
+
+    private void initLists(){
+        new Thread(){
+            @Override
+            public void run() {
+                final List<TakenDrink> takenDrinksList =
+                        AppDatabase.getAppDatabase(MainActivity.this).takenDrinkDAO().getAllTakenDrinks();
+
+                final List<DrinkInfo> recentDrinksList =
+                        AppDatabase.getAppDatabase(MainActivity.this).drinkDAO().getAllForCategory(-1);
+
+                takenDrinks = takenDrinksList;
+                recentDrinks = recentDrinksList;
+
+                for(int i = 0; i < takenDrinks.size();i++){
+                    System.out.println(Integer.toString(takenDrinks.get(i).getCaffineAmount()));
+                    System.out.println(recentDrinks.get(i).getDrinkName());
+                }
+
+            }
+        }.start();
+    }
+
+
+    private void initDrawerSettings(Toolbar toolbar){
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -44,30 +94,28 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView =  findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        initFabSettings();
     }
 
-
-    void initFabSettings() {
+    private void initFabSettings() {
         final FabSpeedDial fabSpeedDial = findViewById(R.id.fab_speed_dial);
         fabSpeedDial.setMenuListener(new SimpleMenuListenerAdapter() {
             @Override
             public boolean onMenuItemSelected(MenuItem menuItem) {
                 int id = menuItem.getItemId();
-
                 if (id == R.id.fab_add_drink) {
-                    //Open a new activity for drinking
-                    Intent intent = new Intent(MainActivity.this, AddDrinkActivity.class);
-                    startActivity(intent);
-                }
+                    startAddDrinkActivity();
+                } else if (id == R.id.recent_one) {
 
+                } else if (id == R.id.recent_two) {
+
+                } else if (id == R.id.recent_three) {
+
+                }
                 fabSpeedDial.closeMenu();
                 return true;
             }
         });
     }
-
 
     @Override
     public void onBackPressed() {
@@ -86,9 +134,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.drawer_add_drink) {
-            //Go to the add drinks menu
+            startAddDrinkActivity();
         } else if (id == R.id.nav_share) {
-
+            //TODO - we need stuff here
         } else if (id == R.id.nav_send) {
 
         }
@@ -97,6 +145,53 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    private void startAddDrinkActivity(){
+        Intent intent = new Intent(MainActivity.this, AddDrinkActivity.class);
+        startActivityForResult(intent, 1);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            DrinkInfo drink = (DrinkInfo) bundle.getSerializable(CHOSEN_DRINK);
+            addDrink(drink);
+        }
+    }
+
+
+    public void addDrink(DrinkInfo drink){
+        long seconds = System.currentTimeMillis();
+        TakenDrink takenDrink = new TakenDrink(drink.getCaffineAmount(), seconds);
+        takenDrinks.add(takenDrink);
+        drink.setDrinkCategory(-1);
+        recentDrinks.add(drink);
+        saveDrinks(takenDrink, drink);
+
+
+        Toast.makeText(this, drink.getDrinkName(), Toast.LENGTH_SHORT).show();
+
+//        TODO - do something about updating UI and calculating time to set the images
+    }
+
+    private void saveDrinks(final TakenDrink takenDrink, final DrinkInfo drinkInfo){
+        new Thread(){
+            @Override
+            public void run() {
+                long id = AppDatabase.getAppDatabase(MainActivity.this).
+                        drinkDAO().insertDrink(drinkInfo);
+                drinkInfo.setDrinkID(id);
+
+                id = AppDatabase.getAppDatabase(MainActivity.this).
+                        takenDrinkDAO().insertDrink(takenDrink);
+                takenDrink.setDrinkID(id);
+
+                //TODO - have to Update UI, maybe do it here in runUIThread
+            }
+        }.start();
+    }
+
 
     public void setTvCurrInYouText(String currInYouText) {
         this.tvCurrInYou.setText(currInYouText + "mg in body");

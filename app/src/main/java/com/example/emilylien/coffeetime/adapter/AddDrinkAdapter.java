@@ -31,8 +31,6 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
 
     public static final String SECTION_NUMBER = "SECTION_NUMBER";
 
-
-
     private final List<DrinkSelectionFragment> fragmentList = new ArrayList<>();
 
     private FragmentManager fm;
@@ -51,8 +49,6 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
     @Override
     public Fragment getItem(int position) {
         DrinkSelectionFragment fragment = fragmentList.get(position);
-
-        System.out.println("\n\n getItem \n\n");
         return fragment;
     }
 
@@ -85,10 +81,7 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
 
     public static class DrinkSelectionFragment
             extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
+
 
         private String sectionName;
         private int sectionNumber;
@@ -97,19 +90,13 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
         private RecyclerView recyclerView;
 
 
-        public DrinkSelectionFragment() {
-            System.out.println("\n\n constructor \n\n");
-        }
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
+        public DrinkSelectionFragment() { }
+
         public static AddDrinkAdapter.DrinkSelectionFragment newInstance(
                 String sectionName,
                 int sectionNumber,
                 AddDrinkAdapter adapter
         ) {
-            System.out.println("\n\n newInstance \n\n");
             AddDrinkAdapter.DrinkSelectionFragment fragment = new AddDrinkAdapter.DrinkSelectionFragment();
             fragment.parentAdapter = adapter;
             fragment.setSectionName(sectionName);
@@ -120,8 +107,6 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            System.out.println("\n\n OnCreateView \n\n");
-
             View rootView = inflater.inflate(R.layout.fragment_add_drink, container, false);
 
             Button addDrinkTypebtn = rootView.findViewById(R.id.btnAddDrinkType);

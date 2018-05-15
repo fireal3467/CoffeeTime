@@ -2,15 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_three"
+        android:id="@+id/recent_three"
         android:icon= "@drawable/ic_launcher_background"
         android:title="2nd last drink name" />
-
     <item
-        android:id="@+id/action_two"
+        android:id="@+id/recent_two"
+        android:icon= "@drawable/ic_launcher_background"
+        android:title="2nd last drink name" />
+    <item
+        android:id="@+id/recent_one"
         android:icon= "@drawable/ic_launcher_background"
         android:title="last drink name"/>
-
     <item
         android:id="@+id/fab_add_drink"
         android:icon= "@drawable/ic_launcher_background"

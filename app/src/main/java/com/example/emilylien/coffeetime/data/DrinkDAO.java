@@ -15,7 +15,7 @@ import java.util.List;
 @Dao
 public interface DrinkDAO {
     @Query("SELECT * FROM drinkinfo")
-    List<DrinkInfo> getAll();
+    List<DrinkInfo> getAllDrinks();
 
     @Query("SELECT * FROM drinkinfo WHERE category = :category")
     List<DrinkInfo> getAllForCategory(int category);
@@ -24,8 +24,8 @@ public interface DrinkDAO {
     long insertDrink(DrinkInfo drink);
 
     @Delete
-    void delete(DrinkInfo drink);
+    void deleteDrink(DrinkInfo drink);
 
     @Update
-    void update(DrinkInfo drink);
+    void updateDrink(DrinkInfo drink);
 }

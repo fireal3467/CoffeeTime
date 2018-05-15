@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.emilylien.coffeetime.data.DrinkInfo;
 
@@ -40,6 +41,15 @@ public class AddDrinkDialog extends DialogFragment {
         drinkSize = v.findViewById(R.id.tvDrinkSize);
         caffineAmount = v.findViewById(R.id.tvCaffineAmount);
         cancelbtn = v.findViewById(R.id.btnCancel);
+        addBtn = v.findViewById(R.id.btnAddDrink);
+
+        initOnClickListener();
+        setDrinkInfo();
+
+        return v;
+    }
+
+    private void initOnClickListener(){
         cancelbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,15 +57,22 @@ public class AddDrinkDialog extends DialogFragment {
             }
         });
 
-        addBtn = v.findViewById(R.id.btnAddDrink);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrinkInfo drink = (DrinkInfo) getArguments().getSerializable(DRINK_CHOICE);
+                System.out.println(getContext().getClass().getName());
+                ((AddDrinkActivity) getContext()).addDrink(drink);
+                dismiss();
+            }
+        });
+    }
 
-
+    private void setDrinkInfo(){
         DrinkInfo drink = (DrinkInfo) getArguments().getSerializable(DRINK_CHOICE);
         drinkName.setText(drink.getDrinkName());
         drinkSize.setText(drink.getSize());
         caffineAmount.setText(Integer.toString(drink.getCaffineAmount()));
-
-        return v;
     }
 
 }
