@@ -27,7 +27,6 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
     private List<DrinkInfo> drinkList;
     private Context context;
 
-
     /*
     @param drinkList - should contain all the prerecorded default drinks to be added
                        in addition to any custom drinks added
@@ -65,8 +64,7 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
                         drinkList.get(holder.getAdapterPosition()));
                 newDialog.setArguments(bundle);
 
-                //TODO: check this doesn't
-                // break anything
+                //TODO: check this doesn't break anything
                 newDialog.show(((AddDrinkActivity)context).getSupportFragmentManager()
                         , "AddDrink");
             }
@@ -77,6 +75,11 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
     @Override
     public int getItemCount() {
         return drinkList.size();
+    }
+
+    public void addDrinkType(DrinkInfo drink){
+        drinkList.add(drink);
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

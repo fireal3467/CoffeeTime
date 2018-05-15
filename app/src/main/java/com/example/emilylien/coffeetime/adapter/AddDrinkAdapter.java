@@ -26,6 +26,8 @@ import java.util.List;
  */
 
 public class AddDrinkAdapter extends FragmentPagerAdapter{
+
+    public static final String SECTION_NUMBER = "SECTION_NUMBER";
     private final List<DrinkSelectionFragment> fragmentList = new ArrayList<>();
 
     FragmentManager fm;
@@ -37,8 +39,8 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
     }
 
     private void initLists(){
-        fragmentList.add(DrinkSelectionFragment.newInstance("Coffee",1,this));
-        fragmentList.add(DrinkSelectionFragment.newInstance("Custom",2, this));
+        fragmentList.add(DrinkSelectionFragment.newInstance("Coffee",0,this));
+        fragmentList.add(DrinkSelectionFragment.newInstance("Custom",1, this));
     }
 
     @Override
@@ -59,26 +61,34 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
         return fragmentList.get(position).getSectionName();
     }
 
-    private void addDrink() {
-        new AddDrinkTypeDialog().show(fm,"stuff");
+
+    public void addDrinkType(DrinkInfo drink, int fragPos) {
+        DrinkSelectionFragment fragment = fragmentList.get(fragPos);
+        fragment.addDrinkType(drink);
+    }
+
+
+    private void showAddDrinkTypeDialog(int sectionNumber) {
+        AddDrinkTypeDialog dialog = new AddDrinkTypeDialog();
+        Bundle bundle = new Bundle();
+        bundle.putInt(SECTION_NUMBER,sectionNumber);
+        dialog.setArguments(bundle);
+
+        dialog.show(fm,"stuff");
     }
 
 
     public static class DrinkSelectionFragment
-            extends Fragment
-            implements AddDrinkTypeDialog.AddDrinkTypeInterface {
+            extends Fragment {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
-        private static final String ARG_SECTION_NUMBER = "SECTION_NUMBER";
-        private static final String ARG_SECTION_NAME = "SECTION_NAME";
 
         private String sectionName;
         private int sectionNumber;
         private DrinkTypeAdapter drinkTypeAdapter;
-        //TODO - fix later
-        public AddDrinkAdapter adapter;
+        public AddDrinkAdapter parentAdapter;
 
 
         public DrinkSelectionFragment() {
@@ -88,10 +98,14 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
          * Returns a new instance of this fragment for the given section
          * number.
          */
-        public static AddDrinkAdapter.DrinkSelectionFragment newInstance(String sectionName, int sectionNumber, AddDrinkAdapter adapter) {
+        public static AddDrinkAdapter.DrinkSelectionFragment newInstance(
+                String sectionName,
+                int sectionNumber,
+                AddDrinkAdapter adapter
+        ) {
             System.out.println("\n\n newInstance \n\n");
             AddDrinkAdapter.DrinkSelectionFragment fragment = new AddDrinkAdapter.DrinkSelectionFragment();
-            fragment.adapter = adapter;
+            fragment.parentAdapter = adapter;
             fragment.setSectionName(sectionName);
             fragment.setSectionNumber(sectionNumber);
             return fragment;
@@ -105,12 +119,14 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
             View rootView = inflater.inflate(R.layout.fragment_add_drink, container, false);
 
             Button addDrinkTypebtn = rootView.findViewById(R.id.btnAddDrinkType);
+
             addDrinkTypebtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    adapter.addDrink();
+                    parentAdapter.showAddDrinkTypeDialog(sectionNumber);
                 }
             });
+
 
             RecyclerView recyclerView = rootView.findViewById(R.id.recyclerList);
             recyclerView.setHasFixedSize(true);
@@ -140,9 +156,10 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
             this.sectionNumber = sectionNumber;
         }
 
-        @Override
+        //TODO - clean up the addDrinkType cascading logic
         public void addDrinkType(DrinkInfo drink) {
-            System.out.println("Drink Added");
+            System.out.println("Drink Being added in Fragment");
+            drinkTypeAdapter.addDrinkType(drink);
         }
     }
 }

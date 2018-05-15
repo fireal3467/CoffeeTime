@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.emilylien.coffeetime.data.DrinkInfo;
 
+import static com.example.emilylien.coffeetime.adapter.AddDrinkAdapter.SECTION_NUMBER;
 import static com.example.emilylien.coffeetime.adapter.DrinkTypeAdapter.DRINK_CHOICE;
 
 /**
@@ -20,11 +21,8 @@ import static com.example.emilylien.coffeetime.adapter.DrinkTypeAdapter.DRINK_CH
 
 public class AddDrinkTypeDialog extends DialogFragment {
 
-
-
-
     public interface AddDrinkTypeInterface {
-        public void addDrinkType(DrinkInfo drink);
+        public void addDrinkType(DrinkInfo drink, int sectionNumber);
     }
 
     private AddDrinkTypeInterface addDrinkTypeInterface;
@@ -34,6 +32,9 @@ public class AddDrinkTypeDialog extends DialogFragment {
     private EditText caffineAmount;
     private Button cancelbtn;
     private Button addBtn;
+
+    private int sectionNum;
+
 
     @Override
     public void onAttach(Context context) {
@@ -58,24 +59,30 @@ public class AddDrinkTypeDialog extends DialogFragment {
         drinkSize = v.findViewById(R.id.etDrinkSize);
         caffineAmount = v.findViewById(R.id.etCaffineAmount);
         cancelbtn = v.findViewById(R.id.btnCancel);
+        addBtn = v.findViewById(R.id.btnAddDrink);
+        sectionNum = getArguments().getInt(SECTION_NUMBER);
+
+        initOnClickListeners();
+
+        return v;
+    }
+
+    private void initOnClickListeners(){
         cancelbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();
             }
         });
-
-        addBtn = v.findViewById(R.id.btnAddDrink);
         addBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 DrinkInfo newDrink = new DrinkInfo(drinkName.getText().toString(),
-                                                drinkSize.getText().toString(),
-                                                Integer.parseInt(caffineAmount.getText().toString()));
-
+                        drinkSize.getText().toString(),
+                        Integer.parseInt(caffineAmount.getText().toString()));
+                addDrinkTypeInterface.addDrinkType(newDrink, sectionNum);
+                dismiss();
             }
         });
-
-        return v;
     }
 }
