@@ -1,158 +1,207 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:descendantFocusability="beforeDescendants"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:orientation="vertical">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
         android:orientation="vertical"
-        android:fillViewport="true"
-        >
+        android:padding="10dp">
 
-        <RelativeLayout
+        <android.support.constraint.ConstraintLayout
             android:id="@+id/rlLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
-            android:id="@+id/tvDailyLimits"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Recommended limit"
-            android:layout_centerHorizontal="true"
-            android:textSize="23sp"
-            android:textColor="#000000"/>
+                android:id="@+id/tvDailyLimits"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="24dp"
+                android:text="Recommended limit"
+                android:textColor="#000000"
+                android:textSize="23sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvRecommendedLimitDescription"
-                android:layout_below="@+id/tvDailyLimits"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tvDailyLimits"
+                android:layout_marginEnd="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:text="Answering the optional questions will help determine what your maximum caffeine in-take should be."
                 android:textSize="16sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:text="Answering the optional questions will help determine what your maximum caffeine in-take should be."/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvDailyLimits" />
 
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/tilAge"
-                android:layout_below="@id/tvRecommendedLimitDescription"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="Age"
+                android:layout_below="@id/tvRecommendedLimitDescription"
+                android:layout_marginEnd="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
                 android:hint="Age"
                 android:inputType="number"
-                app:met_helperText="Optional">
-            </com.rengwuxian.materialedittext.MaterialEditText>
-
-            <TextView
-                android:id="@+id/tvPregnant"
-                android:layout_below="@+id/tilAge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginTop="15dp"
-                android:text="Pregnant: "/>
+                android:paddingLeft="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRecommendedLimitDescription"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Age"
+                app:met_helperText="Optional"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <Switch
                 android:id="@+id/switchPregnant"
-                android:layout_toRightOf="@+id/tvPregnant"
-                android:layout_below="@id/tilAge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
-
-            <LinearLayout
-                android:id="@+id/llRecommendedDailyLimit"
-                android:layout_below="@id/switchPregnant"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="15dp"
-                android:weightSum="2">
-
-                <TextView
-                    android:id="@+id/tvRecommendedDailyLimitPrompt"
-                    android:layout_below="@id/switchPregnant"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="fill"
-                    android:text="Recommended daily caffeine limit:" />
-
-                <TextView
-                    android:id="@+id/tvRecommendedDailyLimitAnswer"
-                    android:textSize="23sp"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="400mg"
-                    android:layout_weight="1"/>
-            </LinearLayout>
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="Pregnant: "
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilAge" />
 
             <TextView
-            android:id="@+id/tvSetDailyCaffeineIntakeTitle"
-            android:layout_below="@+id/llRecommendedDailyLimit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="23sp"
-            android:text="Set daily caffeine intake"
-           />
+                android:id="@+id/tvRecommendedDailyLimitPrompt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/switchPregnant"
+                android:layout_gravity="fill"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:text="Recommended daily caffeine limit:"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/guideline"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/switchPregnant" />
+
+            <android.support.constraint.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="182dp" />
+
+            <TextView
+                android:id="@+id/tvRecommendedDailyLimitAnswer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="1"
+                android:text="400mg"
+                android:textSize="23sp"
+                app:layout_constraintBottom_toBottomOf="@+id/tvRecommendedDailyLimitPrompt"
+                app:layout_constraintStart_toStartOf="@+id/guideline"
+                app:layout_constraintTop_toTopOf="@+id/tvRecommendedDailyLimitPrompt" />
+
+            <TextView
+                android:id="@+id/tvSetDailyCaffeineIntakeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="48dp"
+                android:text="Set daily caffeine intake"
+                android:textSize="23sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvRecommendedDailyLimitPrompt" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/tilMinimum"
-                android:layout_below="@id/tvSetDailyCaffeineIntakeTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="Minimum"
+                android:layout_below="@id/tvSetDailyCaffeineIntakeTitle"
+                android:layout_marginEnd="16dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:hint="Minimum"
                 android:inputType="numberDecimal"
-                android:layout_marginTop="10dp"
-                android:hint="Minimum">
-            </com.rengwuxian.materialedittext.MaterialEditText>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSetDailyCaffeineIntakeTitle"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Minimum"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/tilMaximum"
-                android:layout_below="@id/tilMinimum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:met_floatingLabel="highlight"
+                android:layout_below="@id/tilMinimum"
+                android:layout_marginEnd="24dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:hint="Maximum"
                 android:inputType="numberDecimal"
-                app:met_floatingLabelText="Maximum"
-                android:hint="Maximum">
-            </com.rengwuxian.materialedittext.MaterialEditText>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilMinimum"
+                app:met_floatingLabel="highlight"
+                app:met_floatingLabelText="Maximum"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <Button
                 android:id="@+id/btnOnboard2Back"
-                android:layout_below="@id/tilMaximum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:text="BACK" />
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/tilMaximum"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="24dp"
+                android:text="BACK"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilMaximum" />
 
             <Button
                 android:id="@+id/btnOnboard2Next"
-                android:layout_below="@id/tilMinimum"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NEXT"/>
-        </RelativeLayout>
-    </ScrollView>
-</LinearLayout>
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/tilMinimum"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginTop="24dp"
+                android:text="NEXT"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilMaximum" />
+        </android.support.constraint.ConstraintLayout>
+    </LinearLayout>
+</ScrollView>
