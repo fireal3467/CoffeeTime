@@ -51,6 +51,11 @@ public class MainActivity extends AppCompatActivity
     private List<TakenDrink> takenDrinks;
     private List<DrinkInfo> recentDrinks;
 
+    private int sleepTimeMinutes;
+    private float halflifeMinutes;
+    private int caffineCurrentlySystem;
+    private int maxCaffine;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +103,8 @@ public class MainActivity extends AppCompatActivity
         int nowHours = now.getHourOfDay();
         int nowMins = now.getMinuteOfDay();
 
+        int nowMinuteOfDay = now.getMinuteOfDay();
+
         //get sleep goal time
         DateTimeFormatter sleepGoalFormat = DateTimeFormat.forPattern("hh'h' mm'm'");
         DateTime sleepGoalDate = sleepGoalFormat.parseDateTime("10h 30m");
@@ -121,9 +128,16 @@ public class MainActivity extends AppCompatActivity
         }
         String bedTimeMins = fixMinutes(wakeupDate.minusMinutes(sleepGoalMins).getMinuteOfHour());
 
+        int bedTimeMinuteOfDay = wakeupDate.minusHours(sleepGoalHours).getMinuteOfDay();
+
+
+
+        Log.d("sleepsleep", "currentTime " + nowHours + "h " + nowMins + "m ");
         Log.d("sleepsleep", "sleepGoal: " + sleepGoalHours + "h " + sleepGoalMins + "m");
         Log.d("sleepsleep", "wakeup: " + wakeupHours + ":" + wakeupMins);
         Log.d("sleepsleep", "Bedtime: " + bedTimeHour + ":" + bedTimeMins + AM_PM);
+
+        Log.d("sleepsleep", "minuteOfDay: " + nowMinuteOfDay + ":" +  bedTimeMinuteOfDay);
     }
 
     private void initLists(){
@@ -139,10 +153,7 @@ public class MainActivity extends AppCompatActivity
                 takenDrinks = takenDrinksList;
                 recentDrinks = recentDrinksList;
 
-                for(int i = 0; i < takenDrinks.size();i++){
-                    System.out.println(Integer.toString(takenDrinks.get(i).getCaffineAmount()));
-                    System.out.println(recentDrinks.get(i).getDrinkName());
-                }
+                //TODO - update current caffine amount;
 
             }
         }.start();
@@ -169,7 +180,7 @@ public class MainActivity extends AppCompatActivity
                 if (id == R.id.fab_add_drink) {
                     startAddDrinkActivity();
                 } else if (id == R.id.recent_one) {
-
+                    //TODO - call add drink here for the most recent drinks
                 } else if (id == R.id.recent_two) {
 
                 } else if (id == R.id.recent_three) {
@@ -200,7 +211,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.drawer_add_drink) {
             startAddDrinkActivity();
         } else if (id == R.id.nav_share) {
-            //TODO - we need stuff here
+            //TODO - we need stuff here??
         } else if (id == R.id.nav_send) {
 
         }
@@ -227,7 +238,14 @@ public class MainActivity extends AppCompatActivity
 
     public void addDrink(DrinkInfo drink){
         long seconds = System.currentTimeMillis();
-        TakenDrink takenDrink = new TakenDrink(drink.getCaffineAmount(), seconds);
+        DateTime now = new DateTime();
+        //TODO - this needs to be fixed with the right time
+        int nowHours = now.getHourOfDay();
+        int nowMins = now.getMinuteOfHour();
+
+        int nowMinuteOfDay = now.getMinuteOfDay();
+
+        TakenDrink takenDrink = new TakenDrink(drink.getCaffineAmount(), nowHours+"h " + nowMins+"m");
         takenDrinks.add(takenDrink);
         drink.setDrinkCategory(-1);
         recentDrinks.add(drink);
@@ -236,7 +254,7 @@ public class MainActivity extends AppCompatActivity
 
         Toast.makeText(this, drink.getDrinkName(), Toast.LENGTH_SHORT).show();
 
-//        TODO - do something about updating UI and calculating time to set the images
+//        TODO - do something about updating UI and updating the images with the proper things
     }
 
     private void saveDrinks(final TakenDrink takenDrink, final DrinkInfo drinkInfo){
@@ -256,6 +274,34 @@ public class MainActivity extends AppCompatActivity
         }.start();
     }
 
+    //calculates how much caffine each drink gives
+    public int caffineContributionAtMidnight(int takenTime, int caffineAmount ){
+        int bedTimeByTotalMinutes = sleepTimeMinutes;
+        if(bedTimeByTotalMinutes < 720){
+            bedTimeByTotalMinutes += 1440; //if its in the am, add minutes
+        }
+        int timeDifferenceDrinkSleep = bedTimeByTotalMinutes - takenTime;
+        float numHalflives = timeDifferenceDrinkSleep/halflifeMinutes;
+        int caffineContribution = (int) (caffineAmount/(2 * numHalflives));
+
+        return caffineContribution;
+    }
+
+    public float maxCaffineCanTake(){
+        int bedTimeByTotalMinutes = sleepTimeMinutes;
+        if(bedTimeByTotalMinutes < 720){
+            bedTimeByTotalMinutes += 1440; //if its in the am, add minutes
+        }
+        //TODO - this needs to be fixed with the right time
+        DateTime now = new DateTime();
+        int timeDifferenceNowSleep = bedTimeByTotalMinutes - now.getMinuteOfDay();
+        float numHalflives = timeDifferenceNowSleep/halflifeMinutes;
+        float maxCaffineCanTake = (maxCaffine - caffineCurrentlySystem)*(2*numHalflives);
+
+        return maxCaffineCanTake;
+    }
+
+
 
     public void setTvCurrInYouText(String currInYouText) {
         this.tvCurrInYou.setText(currInYouText + "mg in body");
@@ -271,7 +317,6 @@ public class MainActivity extends AppCompatActivity
 
     public int extractHowMuchMore() {
         return extractNumber(tvHowMuchMore.getText().toString());
-
     }
 
     public int extractNumber(String string) {

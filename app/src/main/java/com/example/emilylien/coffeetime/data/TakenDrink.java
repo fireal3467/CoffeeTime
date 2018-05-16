@@ -20,9 +20,9 @@ public class TakenDrink {
     private int caffineAmount;
 
     @ColumnInfo(name = "time")
-    private long time;
+    private String time;
 
-    public TakenDrink(int caffineAmount, long time){
+    public TakenDrink(int caffineAmount, String time){
         this.caffineAmount = caffineAmount;
         this.time = time;
     }
@@ -43,11 +43,11 @@ public class TakenDrink {
         this.caffineAmount = caffineAmount;
     }
 
-    public long getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(long time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }
