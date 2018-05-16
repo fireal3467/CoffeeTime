@@ -134,46 +134,31 @@ public class Onboard3 extends AppCompatActivity {
     }
 
     private void saveSleepGoal() {
-        long sleepGoal = -1;
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh'h' mm'm'");
-        Date date;
-
-        try {
-            String sleepGoalString = etSleepGoal.getText().toString();
-            date = simpleDateFormat.parse(sleepGoalString);
-            sleepGoal = date.getTime();
-        } catch (Exception e) {
-            try {
-                date = simpleDateFormat.parse("7h 30m");
-                sleepGoal = date.getTime();
-            } catch (Exception e2) {}
+        String sleepGoal;
+        if (etSleepGoal.getText().toString().matches("")) {
+            sleepGoal = etSleepGoal.getHint().toString();
+        } else {
+            sleepGoal = etSleepGoal.getText().toString();
         }
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putLong(getString(R.string.SLEEP_GOAL), sleepGoal);
+        editor.putString(getString(R.string.SLEEP_GOAL), sleepGoal);
         editor.commit();
     }
 
     private void saveDays() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-        Date date;
-        String currDayString;
-
         for (MaterialEditText day : days) {
-            long wakeUp;
-            currDayString = day.getHint().toString().toUpperCase();
-            try {
-                String wakeUpString = day.getText().toString();
-                date = dateFormat.parse(wakeUpString);
-                wakeUp = date.getTime();
-            } catch (Exception e) {
-                wakeUp = -1;
+            String wakeupTime = "SLEEP_IN";
+            String currDayString = day.getHint().toString().toUpperCase();
+            String dayText = day.getText().toString();
+            if (!dayText.matches("")) {
+                wakeupTime = day.getText().toString();
             }
 
             SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putLong(currDayString, wakeUp);
+            editor.putString(currDayString, wakeupTime);
             editor.commit();
         }
     }
