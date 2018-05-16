@@ -23,6 +23,8 @@ import com.example.emilylien.coffeetime.data.DrinkInfo;
 import com.example.emilylien.coffeetime.data.TakenDrink;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -76,14 +78,14 @@ public class MainActivity extends AppCompatActivity
         float halflife = sharedPreferences.getFloat(getString(R.string.HALF_LIFE), -1);
         int min = sharedPreferences.getInt(getString(R.string.MIN), -1);
         int max = sharedPreferences.getInt(getString(R.string.MAX), -1);
-        long sleepGoal = sharedPreferences.getLong(getString(R.string.SLEEP_GOAL), -1);
-        long monday = sharedPreferences.getLong("MONDAY", -2); //-1 is stored in saved preferences when there is no wakeup time
-        long tuesday = sharedPreferences.getLong("TUESDAY", -2);
-        long wednesday = sharedPreferences.getLong("WEDNESDAY", -2);
-        long thursday = sharedPreferences.getLong("THURSDAY", -2);
-        long friday = sharedPreferences.getLong("FRIDAY", -2);
-        long saturday = sharedPreferences.getLong("SATURDAY", -2);
-        long sunday = sharedPreferences.getLong("SUNDAY", -2);
+        String sleepGoal = sharedPreferences.getString(getString(R.string.SLEEP_GOAL), "ERROR");
+        String monday = sharedPreferences.getString("MONDAY", "ERROR"); //-1 is stored in saved preferences when there is no wakeup time
+        String tuesday = sharedPreferences.getString("TUESDAY", "ERROR");
+        String wednesday = sharedPreferences.getString("WEDNESDAY", "ERROR");
+        String thursday = sharedPreferences.getString("THURSDAY", "ERROR");
+        String friday = sharedPreferences.getString("FRIDAY", "ERROR");
+        String saturday = sharedPreferences.getString("SATURDAY", "ERROR");
+        String sunday = sharedPreferences.getString("SUNDAY", "ERROR");
 
         Log.d("testing", "halflife: " + halflife);
         Log.d("testing", "min: " + min);
@@ -98,12 +100,11 @@ public class MainActivity extends AppCompatActivity
         Log.d("testing", "sunday: " + sunday);
 
         // TIME STUFF
-        //get current time
-        DateTime now = new DateTime(); // 5:40 PM
-        int nowHours = now.getHourOfDay();
-        int nowMins = now.getMinuteOfDay();
+        Calendar now = Calendar.getInstance();
+        int nowHours = now.get(Calendar.HOUR_OF_DAY);
+        int nowMins = now.get(Calendar.MINUTE);
 
-        int nowMinuteOfDay = now.getMinuteOfDay();
+        int nowMinuteOfDay =  60*nowHours + nowMins;
 
         //get sleep goal time
         DateTimeFormatter sleepGoalFormat = DateTimeFormat.forPattern("hh'h' mm'm'");
@@ -133,6 +134,7 @@ public class MainActivity extends AppCompatActivity
 
 
         Log.d("sleepsleep", "currentTime " + nowHours + "h " + nowMins + "m ");
+        Log.d("sleepsleep", "now: " + nowHours + ":" + nowMins);
         Log.d("sleepsleep", "sleepGoal: " + sleepGoalHours + "h " + sleepGoalMins + "m");
         Log.d("sleepsleep", "wakeup: " + wakeupHours + ":" + wakeupMins);
         Log.d("sleepsleep", "Bedtime: " + bedTimeHour + ":" + bedTimeMins + AM_PM);
