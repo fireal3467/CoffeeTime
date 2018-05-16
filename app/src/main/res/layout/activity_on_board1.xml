@@ -100,7 +100,7 @@
         android:id="@+id/etHalflife"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="# hours"
+        android:hint="5 hours"
         android:inputType="numberDecimal"
         app:layout_constraintBottom_toBottomOf="@+id/tvHalfLife"
         app:layout_constraintEnd_toEndOf="parent"

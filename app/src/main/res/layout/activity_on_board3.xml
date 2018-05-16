@@ -2,6 +2,7 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
@@ -14,17 +15,12 @@
         android:focusableInTouchMode="true"
         android:orientation="vertical">
 
-        <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            xmlns:tools="http://schemas.android.com/tools"
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:descendantFocusability="beforeDescendants"
-            android:focusableInTouchMode="true"
-            tools:layout_editor_absoluteY="25dp">
+            android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/tvSleepTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -34,6 +30,20 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvSleepGoal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:paddingBottom="12dp"
+                android:paddingTop="12dp"
+                android:text="Sleep Goal:"
+                android:textSize="23sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSleepTitle" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/etSleepGoal"
@@ -49,58 +59,16 @@
                 app:met_floatingLabelText="# hours"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <TextView
-                android:id="@+id/tvSleepGoal"
+                android:id="@+id/tvWakeUpTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:paddingBottom="12dp"
-                android:paddingTop="12dp"
-                android:text="Sleep Goal:"
-                android:textSize="23sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
-            <TextView
-                android:id="@+id/tvWantWakeUp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
-                android:paddingBottom="12sp"
-                android:text="I want to wake up at "
+                android:text="Wake Up Time:"
                 android:textSize="23sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvSleepGoal" />
-
-            <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/etWakeup"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:hint="10:00 AM"
-                android:inputType="number"
-                app:layout_constraintBottom_toBottomOf="@+id/tvWantWakeUp"
-                app:layout_constraintStart_toEndOf="@+id/tvWantWakeUp"
-                app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="# hours"></com.rengwuxian.materialedittext.MaterialEditText>
-
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="24dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:switchPadding="10dp"
-                android:text="Everyday"
-                android:textSize="23sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvWantWakeUp" />
-
 
             <android.support.constraint.Guideline
                 android:id="@+id/guideline"
@@ -111,15 +79,15 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/etMonday"
-                android:layout_width="0dp"
+                android:layout_width="168dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="24dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
                 android:hint="Monday"
                 android:inputType="number"
-                app:layout_constraintEnd_toStartOf="@id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/switch1"
+                app:layout_constraintTop_toBottomOf="@+id/tvWakeUpTime"
                 app:met_floatingLabel="highlight"
                 app:met_floatingLabelText="Monday"></com.rengwuxian.materialedittext.MaterialEditText>
 
@@ -134,7 +102,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etMonday"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="Monday"></com.rengwuxian.materialedittext.MaterialEditText>
+                app:met_floatingLabelText="Tuesday"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/etWednesday"
@@ -147,9 +115,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etTuesday"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="Wednesday"
-                tools:layout_editor_absoluteX="24dp"
-                tools:layout_editor_absoluteY="383dp"></com.rengwuxian.materialedittext.MaterialEditText>
+                app:met_floatingLabelText="Wednesday"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/etThursday"
@@ -162,9 +128,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etWednesday"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="Monday"
-                tools:layout_editor_absoluteX="24dp"
-                tools:layout_editor_absoluteY="450dp"></com.rengwuxian.materialedittext.MaterialEditText>
+                app:met_floatingLabelText="Thursday"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/etFriday"
@@ -177,9 +141,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etThursday"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="Monday"
-                tools:layout_editor_absoluteX="284dp"
-                tools:layout_editor_absoluteY="322dp"></com.rengwuxian.materialedittext.MaterialEditText>
+                app:met_floatingLabelText="Friday"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/etSaturday"
@@ -192,9 +154,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etFriday"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="Monday"
-                tools:layout_editor_absoluteX="213dp"
-                tools:layout_editor_absoluteY="450dp"></com.rengwuxian.materialedittext.MaterialEditText>
+                app:met_floatingLabelText="Saturday"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/etSunday"
@@ -207,9 +167,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/etSaturday"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="Monday"
-                tools:layout_editor_absoluteX="171dp"
-                tools:layout_editor_absoluteY="364dp"></com.rengwuxian.materialedittext.MaterialEditText>
+                app:met_floatingLabelText="Sunday"></com.rengwuxian.materialedittext.MaterialEditText>
+
+            <Button
+                android:id="@+id/btnOnboard3Back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp"
+                android:text="BACK"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etSunday"
+                tools:layout_editor_absoluteY="470dp" />
+
+            <Button
+                android:id="@+id/btnOnboard3Done"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
+                android:text="DONE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etSunday"
+                tools:layout_editor_absoluteY="470dp" />
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 </ScrollView>

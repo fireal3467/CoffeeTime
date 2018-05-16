@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:fillViewport="true"
@@ -54,7 +52,7 @@
 
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/tilAge"
+                android:id="@+id/etAge"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvRecommendedLimitDescription"
@@ -83,7 +81,7 @@
                 android:text="Pregnant: "
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilAge" />
+                app:layout_constraintTop_toBottomOf="@+id/etAge" />
 
             <TextView
                 android:id="@+id/tvRecommendedDailyLimitPrompt"
@@ -138,7 +136,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvRecommendedDailyLimitPrompt" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/tilMinimum"
+                android:id="@+id/etMaximum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvSetDailyCaffeineIntakeTitle"
@@ -147,61 +145,53 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
-                android:hint="Minimum"
+                android:hint="Maximum"
                 android:inputType="numberDecimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvSetDailyCaffeineIntakeTitle"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="Minimum"></com.rengwuxian.materialedittext.MaterialEditText>
+                app:met_floatingLabelText="Maximum"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <com.rengwuxian.materialedittext.MaterialEditText
-                android:id="@+id/tilMaximum"
+                android:id="@+id/etMinimum"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tilMinimum"
+                android:layout_below="@id/etMaximum"
                 android:layout_marginEnd="24dp"
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
-                android:hint="Maximum"
+                android:hint="Minimum"
                 android:inputType="numberDecimal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilMinimum"
+                app:layout_constraintTop_toBottomOf="@+id/etMaximum"
                 app:met_floatingLabel="highlight"
-                app:met_floatingLabelText="Maximum"></com.rengwuxian.materialedittext.MaterialEditText>
+                app:met_floatingLabelText="Minimum"></com.rengwuxian.materialedittext.MaterialEditText>
 
             <Button
                 android:id="@+id/btnOnboard2Back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@id/tilMaximum"
                 android:layout_marginLeft="24dp"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="24dp"
                 android:text="BACK"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilMaximum" />
+                app:layout_constraintTop_toBottomOf="@+id/etMinimum" />
 
             <Button
                 android:id="@+id/btnOnboard2Next"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@id/tilMinimum"
                 android:layout_marginEnd="24dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginTop="24dp"
                 android:text="NEXT"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilMaximum" />
+                app:layout_constraintTop_toBottomOf="@+id/etMinimum" />
         </android.support.constraint.ConstraintLayout>
     </LinearLayout>
 </ScrollView>

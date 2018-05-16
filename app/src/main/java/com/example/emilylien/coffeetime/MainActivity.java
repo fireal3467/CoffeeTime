@@ -1,6 +1,8 @@
 package com.example.emilylien.coffeetime;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -60,6 +62,31 @@ public class MainActivity extends AppCompatActivity
 
         initLists();
 
+        //LOAD SAVED PREFERENCES
+        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
+        float halflife = sharedPreferences.getFloat(getString(R.string.HALF_LIFE), -1);
+        int min = sharedPreferences.getInt(getString(R.string.MIN), -1);
+        int max = sharedPreferences.getInt(getString(R.string.MAX), -1);
+        long sleepGoal = sharedPreferences.getLong(getString(R.string.SLEEP_GOAL), -1);
+        long monday = sharedPreferences.getLong("MONDAY", -2); //-1 is stored in saved preferences when there is no wakeup time
+        long tuesday = sharedPreferences.getLong("TUESDAY", -2);
+        long wednesday = sharedPreferences.getLong("WEDNESDAY", -2);
+        long thursday = sharedPreferences.getLong("THURSDAY", -2);
+        long friday = sharedPreferences.getLong("FRIDAY", -2);
+        long saturday = sharedPreferences.getLong("SATURDAY", -2);
+        long sunday = sharedPreferences.getLong("SUNDAY", -2);
+
+        Log.d("testing", "halflife: " + halflife);
+        Log.d("testing", "min: " + min);
+        Log.d("testing", "max: " + max);
+        Log.d("testing", "sleep goal: " + sleepGoal);
+        Log.d("testing", "monday: " + monday);
+        Log.d("testing", "tuesday: " + tuesday);
+        Log.d("testing", "wednesday: " + wednesday);
+        Log.d("testing", "thursday: " + thursday);
+        Log.d("testing", "friday: " + friday);
+        Log.d("testing", "saturday: " + saturday);
+        Log.d("testing", "sunday: " + sunday);
     }
 
     private void initLists(){
