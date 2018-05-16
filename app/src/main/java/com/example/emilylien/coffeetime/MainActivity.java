@@ -73,14 +73,14 @@ public class MainActivity extends AppCompatActivity
         float halflife = sharedPreferences.getFloat(getString(R.string.HALF_LIFE), -1);
         int min = sharedPreferences.getInt(getString(R.string.MIN), -1);
         int max = sharedPreferences.getInt(getString(R.string.MAX), -1);
-        long sleepGoal = sharedPreferences.getLong(getString(R.string.SLEEP_GOAL), -1);
-        long monday = sharedPreferences.getLong("MONDAY", -2); //-1 is stored in saved preferences when there is no wakeup time
-        long tuesday = sharedPreferences.getLong("TUESDAY", -2);
-        long wednesday = sharedPreferences.getLong("WEDNESDAY", -2);
-        long thursday = sharedPreferences.getLong("THURSDAY", -2);
-        long friday = sharedPreferences.getLong("FRIDAY", -2);
-        long saturday = sharedPreferences.getLong("SATURDAY", -2);
-        long sunday = sharedPreferences.getLong("SUNDAY", -2);
+        String sleepGoal = sharedPreferences.getString(getString(R.string.SLEEP_GOAL), "ERROR");
+        String monday = sharedPreferences.getString("MONDAY", "ERROR"); //-1 is stored in saved preferences when there is no wakeup time
+        String tuesday = sharedPreferences.getString("TUESDAY", "ERROR");
+        String wednesday = sharedPreferences.getString("WEDNESDAY", "ERROR");
+        String thursday = sharedPreferences.getString("THURSDAY", "ERROR");
+        String friday = sharedPreferences.getString("FRIDAY", "ERROR");
+        String saturday = sharedPreferences.getString("SATURDAY", "ERROR");
+        String sunday = sharedPreferences.getString("SUNDAY", "ERROR");
 
         Log.d("testing", "halflife: " + halflife);
         Log.d("testing", "min: " + min);
