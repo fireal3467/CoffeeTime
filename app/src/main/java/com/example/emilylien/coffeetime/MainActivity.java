@@ -22,6 +22,10 @@ import com.example.emilylien.coffeetime.data.AppDatabase;
 import com.example.emilylien.coffeetime.data.DrinkInfo;
 import com.example.emilylien.coffeetime.data.TakenDrink;
 
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -87,6 +91,39 @@ public class MainActivity extends AppCompatActivity
         Log.d("testing", "friday: " + friday);
         Log.d("testing", "saturday: " + saturday);
         Log.d("testing", "sunday: " + sunday);
+
+        // TIME STUFF
+        //get current time
+        DateTime now = new DateTime(); // 5:40 PM
+        int nowHours = now.getHourOfDay();
+        int nowMins = now.getMinuteOfDay();
+
+        //get sleep goal time
+        DateTimeFormatter sleepGoalFormat = DateTimeFormat.forPattern("hh'h' mm'm'");
+        DateTime sleepGoalDate = sleepGoalFormat.parseDateTime("10h 30m");
+        int sleepGoalHours = sleepGoalDate.getHourOfDay();
+        int sleepGoalMins = sleepGoalDate.getMinuteOfHour();
+
+        //get wakeup time
+        DateTimeFormatter wakeUpFormat = DateTimeFormat.forPattern("hh:mm a");
+        DateTime wakeupDate = wakeUpFormat.parseDateTime("7:30 AM");
+        int wakeupHours = wakeupDate.getHourOfDay();
+        int wakeupMins = wakeupDate.getMinuteOfHour();
+
+        //calculate bedtime
+        int bedTimeHour = wakeupDate.minusHours(sleepGoalHours).getHourOfDay();
+        String AM_PM = "";
+        if (bedTimeHour < 12) {
+            AM_PM = "AM";
+        } else {
+            AM_PM = "PM";
+            bedTimeHour -= 12;
+        }
+        String bedTimeMins = fixMinutes(wakeupDate.minusMinutes(sleepGoalMins).getMinuteOfHour());
+
+        Log.d("sleepsleep", "sleepGoal: " + sleepGoalHours + "h " + sleepGoalMins + "m");
+        Log.d("sleepsleep", "wakeup: " + wakeupHours + ":" + wakeupMins);
+        Log.d("sleepsleep", "Bedtime: " + bedTimeHour + ":" + bedTimeMins + AM_PM);
     }
 
     private void initLists(){
@@ -240,5 +277,9 @@ public class MainActivity extends AppCompatActivity
     public int extractNumber(String string) {
         String onlyNumString = string.replaceAll("\\D+", "");
         return Integer.parseInt(onlyNumString);
+    }
+
+    private String fixMinutes(int minutes) {
+        return minutes < 10 ? "0" + minutes : "" + minutes;
     }
 }
