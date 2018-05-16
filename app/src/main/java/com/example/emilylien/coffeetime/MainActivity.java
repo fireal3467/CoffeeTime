@@ -23,6 +23,8 @@ import com.example.emilylien.coffeetime.data.DrinkInfo;
 import com.example.emilylien.coffeetime.data.TakenDrink;
 
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -94,9 +96,12 @@ public class MainActivity extends AppCompatActivity
 
         // TIME STUFF
         //get current time
-        DateTime now = new DateTime(); // 5:40 PM
-        int nowHours = now.getHourOfDay();
-        int nowMins = now.getMinuteOfDay();
+//        DateTime now = new DateTime(DateTimeZone.getDefault()); // 5:40 PM
+//        int nowHours = now.getHourOfDay();
+//        int nowMins = now.getMinuteOfHour();
+        Calendar now = Calendar.getInstance();
+        int nowHours = now.get(Calendar.HOUR_OF_DAY);
+        int nowMins = now.get(Calendar.MINUTE);
 
         //get sleep goal time
         DateTimeFormatter sleepGoalFormat = DateTimeFormat.forPattern("hh'h' mm'm'");
@@ -121,6 +126,7 @@ public class MainActivity extends AppCompatActivity
         }
         String bedTimeMins = fixMinutes(wakeupDate.minusMinutes(sleepGoalMins).getMinuteOfHour());
 
+        Log.d("sleepsleep", "now: " + nowHours + ":" + nowMins);
         Log.d("sleepsleep", "sleepGoal: " + sleepGoalHours + "h " + sleepGoalMins + "m");
         Log.d("sleepsleep", "wakeup: " + wakeupHours + ":" + wakeupMins);
         Log.d("sleepsleep", "Bedtime: " + bedTimeHour + ":" + bedTimeMins + AM_PM);
