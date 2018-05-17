@@ -135,7 +135,7 @@ public class Onboard3 extends AppCompatActivity {
             AM_PM = getString(R.string.AM);
         }
 
-        return hourOfDay + getString(R.string.semicolon) + fixMinutes(minute) + " " + AM_PM;
+        return hourOfDay + getString(R.string.semicolon) + fixMinutes(minute) + getString(R.string.space) + AM_PM;
     }
 
     @OnClick(R.id.btnOnboard3Done) public void doneOnboarding() {
