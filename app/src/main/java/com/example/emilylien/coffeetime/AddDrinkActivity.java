@@ -77,9 +77,6 @@ public class AddDrinkActivity extends AppCompatActivity implements AddDrinkTypeD
     public void addDrink(final DrinkInfo drink){
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        System.out.println("AddDrink Here");
-        System.out.println(drink.getDrinkName());
-
         bundle.putSerializable(CHOSEN_DRINK, drink);
         intent.putExtras(bundle);
         setResult(RESULT_OK, intent);

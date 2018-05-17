@@ -303,8 +303,7 @@ public class MainActivity extends AppCompatActivity
         return maxCaffineCanTake;
     }
 
-
-
+    
     public void setTvCurrInYouText(String currInYouText) {
         this.tvCurrInYou.setText(currInYouText + "mg in body");
     }
