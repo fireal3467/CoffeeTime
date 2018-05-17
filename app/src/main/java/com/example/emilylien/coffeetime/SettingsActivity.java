@@ -44,84 +44,105 @@ public class SettingsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
-        float halflife = sharedPreferences.getFloat(getString(R.string.HALF_LIFE), -1);
+        loadHalfLife(sharedPreferences);
+        loadMin(sharedPreferences);
+        loadMax(sharedPreferences);
+        loadDays(sharedPreferences);
+
+        setUpEtDays();
+
+        setUpSleepGoal(sharedPreferences);
+    }
+
+    private void setUpSleepGoal(SharedPreferences sharedPreferences) {
+        String sleepGoal = sharedPreferences.getString(getString(R.string.SLEEP_GOAL), getString(R.string.ERROR));
+        if (!sleepGoal.equals(getString(R.string.ERROR)))
+            etSleepGoal.setText(sleepGoal);
+
+        setUpEtSleepGoalListener();
+    }
+
+    private void loadDays(SharedPreferences sharedPreferences) {
+        loadMonday(sharedPreferences);
+        loadTuesday(sharedPreferences);
+        loadWednesday(sharedPreferences);
+        loadThursday(sharedPreferences);
+        loadFriday(sharedPreferences);
+        loadSaturday(sharedPreferences);
+        loadSunday(sharedPreferences);
+    }
+
+    private void loadSunday(SharedPreferences sharedPreferences) {
+        String sunday = sharedPreferences.getString(getString(R.string.SUNDAY), getString(R.string.ERROR));
+        if (!sunday.equals(getString(R.string.ERROR)))
+            etSunday.setText(sunday);
+    }
+
+    private void loadSaturday(SharedPreferences sharedPreferences) {
+        String saturday = sharedPreferences.getString(getString(R.string.SATURDAY), getString(R.string.ERROR));
+        if (!saturday.equals(getString(R.string.ERROR)))
+            etSaturday.setText(saturday);
+    }
+
+    private void loadFriday(SharedPreferences sharedPreferences) {
+        String friday = sharedPreferences.getString(getString(R.string.FRIDAY), getString(R.string.ERROR));
+        if (!friday.equals(getString(R.string.ERROR)))
+            etFriday.setText(friday);
+    }
+
+    private void loadThursday(SharedPreferences sharedPreferences) {
+        String thursday = sharedPreferences.getString(getString(R.string.THURSDAY), getString(R.string.ERROR));
+        if (!thursday.equals(getString(R.string.ERROR)))
+            etThursday.setText(thursday);
+    }
+
+    private void loadWednesday(SharedPreferences sharedPreferences) {
+        String wednesday = sharedPreferences.getString(getString(R.string.WEDNESDAY), getString(R.string.ERROR));
+        if (!wednesday.equals(getString(R.string.ERROR)))
+            etWednesday.setText(wednesday);
+    }
+
+    private void loadTuesday(SharedPreferences sharedPreferences) {
+        String tuesday = sharedPreferences.getString(getString(R.string.TUESDAY), getString(R.string.ERROR));
+        if (!tuesday.equals(getString(R.string.ERROR)))
+            etTuesday.setText(tuesday);
+    }
+
+    private void loadMonday(SharedPreferences sharedPreferences) {
+        String monday = sharedPreferences.getString(getString(R.string.MONDAY), getString(R.string.ERROR)); //-1 is stored in saved preferences when there is no wakeup time
+        if (!monday.equals(getString(R.string.ERROR)))
+            etMonday.setText(monday);
+    }
+
+    private void loadMin(SharedPreferences sharedPreferences) {
         int min = sharedPreferences.getInt(getString(R.string.MIN), -1);
+        if (min != -1)
+            etMinimum.setText(Integer.toString(min));
+    }
+
+    private void loadMax(SharedPreferences sharedPreferences) {
         int max = sharedPreferences.getInt(getString(R.string.MAX), -1);
-        String sleepGoal = sharedPreferences.getString(getString(R.string.SLEEP_GOAL), "ERROR");
-        String monday = sharedPreferences.getString("MONDAY", "ERROR"); //-1 is stored in saved preferences when there is no wakeup time
-        String tuesday = sharedPreferences.getString("TUESDAY", "ERROR");
-        String wednesday = sharedPreferences.getString("WEDNESDAY", "ERROR");
-        String thursday = sharedPreferences.getString("THURSDAY", "ERROR");
-        String friday = sharedPreferences.getString("FRIDAY", "ERROR");
-        String saturday = sharedPreferences.getString("SATURDAY", "ERROR");
-        String sunday = sharedPreferences.getString("SUNDAY", "ERROR");
+        if (max != -1)
+            etMaximum.setText(Integer.toString(max));
+    }
 
-        days = new MaterialEditText[] {etMonday, etTuesday, etWednesday, etThursday, etFriday, etSaturday, etSunday};
+    private void loadHalfLife(SharedPreferences sharedPreferences) {
+        float halflife = sharedPreferences.getFloat(getString(R.string.HALF_LIFE), -1);
+        if (halflife != -1)
+            etHalfLife.setText(Float.toString(halflife));
+    }
 
-        for (final MaterialEditText day : days) {
-            day.setOnTouchListener(new View.OnTouchListener(){
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        int inType = day.getInputType(); // backup the input type
-                        day.setInputType(InputType.TYPE_NULL); // disable soft input
-                        day.onTouchEvent(event); // call native handler
-                        day.setInputType(inType); // restore input type
-
-                        showTimePickerDay(day);
-                    }
-                    return true; // consume touch event
-                }
-            });
-        }
-
+    private void setUpEtSleepGoalListener() {
         etSleepGoal.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    int inType = etSleepGoal.getInputType(); // backup the input type
-                    etSleepGoal.setInputType(InputType.TYPE_NULL); // disable soft input
-                    etSleepGoal.onTouchEvent(event); // call native handler
-                    etSleepGoal.setInputType(inType); // restore input type
-
+                    disableKeyboard(etSleepGoal, event);
                     showTimePickerSleepGoal();
                 }
                 return true; // consume touch event
             }
         });
-
-        if (halflife != -1)
-            etHalfLife.setText(Float.toString(halflife));
-
-        if (max != -1)
-            etMaximum.setText(Integer.toString(max));
-
-        if (min != -1)
-            etMinimum.setText(Integer.toString(min));
-
-        if (!sleepGoal.equals("ERROR"))
-            etSleepGoal.setText(sleepGoal);
-
-        if (!monday.equals("ERROR"))
-            etMonday.setText(monday);
-
-        if (!tuesday.equals("ERROR"))
-            etTuesday.setText(tuesday);
-
-        if (!wednesday.equals("ERROR"))
-            etWednesday.setText(wednesday);
-
-        if (!thursday.equals("ERROR"))
-            etThursday.setText(thursday);
-
-        if (!friday.equals("ERROR"))
-            etFriday.setText(friday);
-
-        if (!saturday.equals("ERROR"))
-            etSaturday.setText(saturday);
-
-        if (!sunday.equals("ERROR"))
-            etSunday.setText(sunday);
     }
 
     private void showTimePickerSleepGoal() {
@@ -132,7 +153,7 @@ public class SettingsActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(SettingsActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                etSleepGoal.setText(hourOfDay + "h " + fixMinutes(minute) + "m");
+                etSleepGoal.setText(hourOfDay + getString(R.string.h_with_space) + fixMinutes(minute) + getString(R.string.m));
             }
         }, hours, mins, true);
         timePickerDialog.show();
@@ -146,18 +167,22 @@ public class SettingsActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(SettingsActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String AM_PM;
-                if (hourOfDay > 12) {
-                    AM_PM = "PM";
-                    hourOfDay -= 12;
-                } else {
-                    AM_PM = "AM";
-                }
-
-                day.setText(hourOfDay + ":" + fixMinutes(minute) + " " + AM_PM);
+                day.setText(turnToTimeString(hourOfDay, minute));
             }
         }, hours, mins, false);
         timePickerDialog.show();
+    }
+
+    private String turnToTimeString(int hourOfDay, int minute) {
+        String AM_PM;
+        if (hourOfDay > 12) {
+            AM_PM = getString(R.string.PM);
+            hourOfDay -= 12;
+        } else {
+            AM_PM = getString(R.string.AM);
+        }
+
+        return hourOfDay + getString(R.string.semicolon) + fixMinutes(minute) + " " + AM_PM;
     }
 
     private String fixMinutes(int minutes) {
@@ -180,12 +205,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void saveDays() {
         for (MaterialEditText day : days) {
-            String wakeupTime = "SLEEP_IN";
+            String wakeupTime = getString(R.string.SLEEP_IN);
             String currDayString = day.getHint().toString().toUpperCase();
             String dayText = day.getText().toString();
-            if (!dayText.matches("")) {
-                wakeupTime = day.getText().toString();
-            }
+            if (!dayText.matches(""))
+                wakeupTime = dayText;
 
             SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -195,37 +219,74 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btnSave) public void saveBtn() {
+        saveHalfLife();
+        saveMax();
+        saveMin();
+        saveSleepGoal();
+        saveDays();
+
+        finish();
+    }
+
+    private void saveHalfLife() {
         SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
 
         String onlyHalfLife = etHalfLife.getText().toString().replaceAll("[^\\d.]", "");
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putFloat(getString(R.string.HALF_LIFE), Float.parseFloat(onlyHalfLife));
         editor.commit();
+    }
 
+    private void saveMax() {
         int max;
         try {
             max = Integer.parseInt(etMaximum.getText().toString());
         } catch (Exception e) {
             max = 400;
         }
-
-        editor = sharedPreferences.edit();
+        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(getString(R.string.MAX), max);
         editor.commit();
+    }
 
+    private void saveMin() {
         int min;
         try {
             min = Integer.parseInt(etMinimum.getText().toString());
         } catch (Exception e) {
             min = 100;
         }
-        editor = sharedPreferences.edit();
+        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(getString(R.string.MIN), min);
         editor.commit();
+    }
 
-        saveSleepGoal();
-        saveDays();
+    private void disableKeyboard(MaterialEditText etText, MotionEvent event) {
+        int inType = etText.getInputType(); // backup the input type
+        etText.setInputType(InputType.TYPE_NULL); // disable soft input
+        etText.onTouchEvent(event); // call native handler
+        etText.setInputType(inType); // restore input type
+    }
 
-        finish();
+    private void setUpEtDays() {
+        days = new MaterialEditText[] {etMonday, etTuesday, etWednesday, etThursday, etFriday, etSaturday, etSunday};
+        for (final MaterialEditText day : days) {
+            setUpEtDaysListener(day);
+        }
+    }
+
+    private void setUpEtDaysListener(final MaterialEditText day) {
+        day.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    disableKeyboard(day, event);
+                    showTimePickerDay(day);
+                }
+                return true; // consume touch event
+            }
+        });
     }
 }

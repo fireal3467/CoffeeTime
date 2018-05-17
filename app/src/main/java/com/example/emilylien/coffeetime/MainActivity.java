@@ -11,10 +11,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.text.InputType;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +24,7 @@ import com.example.emilylien.coffeetime.R;
 import com.example.emilylien.coffeetime.data.AppDatabase;
 import com.example.emilylien.coffeetime.data.DrinkInfo;
 import com.example.emilylien.coffeetime.data.TakenDrink;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -412,5 +415,12 @@ public class MainActivity extends AppCompatActivity
             SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
             maxCaffine = sharedPreferences.getInt(getString(R.string.MAX), -1);
         }
+    }
+
+    private void disableKeyboard(MaterialEditText etText, MotionEvent event) {
+        int inType = etText.getInputType(); // backup the input type
+        etText.setInputType(InputType.TYPE_NULL); // disable soft input
+        etText.onTouchEvent(event); // call native handler
+        etText.setInputType(inType); // restore input type
     }
 }
