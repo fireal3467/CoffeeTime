@@ -16,11 +16,12 @@
 
         <TextView
             android:id="@+id/tvHowMuchMore"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:text="Can take in 400mg"
             android:textSize="23sp"
+            android:gravity="center"
             app:layout_constraintBottom_toTopOf="@+id/imageView3"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"

@@ -82,7 +82,6 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
     public static class DrinkSelectionFragment
             extends Fragment {
 
-
         private String sectionName;
         private int sectionNumber;
         private DrinkTypeAdapter drinkTypeAdapter;
@@ -120,7 +119,6 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
 
             recyclerView = rootView.findViewById(R.id.recyclerList);
             recyclerView.setHasFixedSize(true);
-            //TODO - this may not be safe, look into this later
             recyclerView.setLayoutManager(
                     new LinearLayoutManager(getActivity()));
 
@@ -166,9 +164,7 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
             this.sectionNumber = sectionNumber;
         }
 
-        //TODO - clean up the addDrinkType cascading logic
         public void addDrinkType(DrinkInfo drink) {
-            System.out.println("Drink Being added in Fragment");
             drinkTypeAdapter.addDrinkType(drink);
         }
     }

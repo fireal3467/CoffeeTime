@@ -74,16 +74,23 @@ public class MainActivity extends AppCompatActivity
         setHalflifeMinutes();
         setMaxCaffine();
 
+
         initDrawerSettings(toolbar);
         initFabSettings();
 
         initLists();
 
-        if (!sleepIn) {
-            maxCaffineCanTake();
-        }
-
         calcCaffineInCurrSystem();
+        maxCaffineCanTake();
+
+
+
+
+        if (takenDrinks != null) {
+            for (int i = 0; i < takenDrinks.size(); i++) {
+                Log.d("dranks", "drank " + i);
+            }
+        }
     }
 
     @Override
@@ -91,9 +98,15 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
 
         setSleepTimeMinutes();
+        calcCaffineInCurrSystem();
         maxCaffineCanTake();
 
-        calcCaffineInCurrSystem();
+
+        if (takenDrinks != null) {
+            for (int i = 0; i < takenDrinks.size(); i++) {
+                Log.d("dranks", "drank " + i);
+            }
+        }
     }
 
     private void initLists(){
@@ -108,6 +121,11 @@ public class MainActivity extends AppCompatActivity
 
                 takenDrinks = takenDrinksList;
                 recentDrinks = recentDrinksList;
+
+                setSleepTimeMinutes();
+                calcCaffineInCurrSystem();
+                maxCaffineCanTake();
+
 
                 //TODO - update current caffine amount;
 

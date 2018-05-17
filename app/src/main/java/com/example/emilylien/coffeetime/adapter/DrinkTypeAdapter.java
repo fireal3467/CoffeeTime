@@ -36,8 +36,8 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
         this.drinkList = drinkList;
         this.context = context;
         this.category = category;
-        drinkList.add(new DrinkInfo("drink1", "100 ml", 300, category));
-        drinkList.add(new DrinkInfo("drink2", "500 ml", 200, category));
+        drinkList.add(new DrinkInfo("Default Drink 1", "100 ml", 300, category));
+        drinkList.add(new DrinkInfo("Default Drink 2", "500 ml", 200, category));
     }
 
     @Override
