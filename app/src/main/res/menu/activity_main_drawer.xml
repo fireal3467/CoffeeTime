@@ -13,6 +13,10 @@
             android:id="@+id/drawer_add_drink"
             android:icon="@drawable/ic_add_black_48dp_00"
             android:title="Add Drink" />
+        <item
+            android:id="@+id/drawer_settings"
+            android:icon="@drawable/settings"
+            android:title="Settings" />
     </group>
 
     <!--<item android:title="Communicate">-->
