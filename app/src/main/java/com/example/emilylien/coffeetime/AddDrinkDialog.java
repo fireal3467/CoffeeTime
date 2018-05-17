@@ -72,7 +72,7 @@ public class AddDrinkDialog extends DialogFragment {
         DrinkInfo drink = (DrinkInfo) getArguments().getSerializable(DRINK_CHOICE);
         drinkName.setText(drink.getDrinkName());
         drinkSize.setText(drink.getSize());
-        caffineAmount.setText(Integer.toString(drink.getCaffineAmount()));
+        caffineAmount.setText(Integer.toString(drink.getCaffineAmount() + "ml"));
     }
 
 }
