@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.emilylien.coffeetime.data.DrinkInfo;
 
@@ -75,15 +76,33 @@ public class AddDrinkTypeDialog extends DialogFragment {
         addBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                DrinkInfo newDrink = new DrinkInfo(
-                        drinkName.getText().toString(),
-                        drinkSize.getText().toString(),
-                        Integer.parseInt(caffineAmount.getText().toString()),
-                        sectionNum
-                );
-                addDrinkTypeInterface.addDrinkType(newDrink, sectionNum);
-                dismiss();
+                if(!fieldValid()){
+                    dismiss();
+                }else {
+                    DrinkInfo newDrink = new DrinkInfo(
+                            drinkName.getText().toString(),
+                            drinkSize.getText().toString(),
+                            Integer.parseInt(caffineAmount.getText().toString()),
+                            sectionNum
+                    );
+                    addDrinkTypeInterface.addDrinkType(newDrink, sectionNum);
+                    dismiss();
+                }
             }
         });
+    }
+
+    private boolean fieldValid(){
+        if(drinkName.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "Name Field can't be Empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(drinkSize.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "Size Field can't be Empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }else if(caffineAmount.getText().toString().isEmpty()){
+            Toast.makeText(getContext(), "Caffine amount Field can't be Empty", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 }
