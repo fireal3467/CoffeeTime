@@ -105,7 +105,7 @@ public class Onboard3 extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(Onboard3.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                etSleepGoal.setText(hourOfDay + getString(R.string.h_with_space) + fixMinutes(minute) + getString(R.string.m));
+                etSleepGoal.setText(hourOfDay + getString(R.string.h) + " " + fixMinutes(minute) + getString(R.string.m));
             }
         }, hours, mins, true);
         timePickerDialog.show();
@@ -135,16 +135,24 @@ public class Onboard3 extends AppCompatActivity {
             AM_PM = getString(R.string.AM);
         }
 
-        return hourOfDay + getString(R.string.semicolon) + fixMinutes(minute) + getString(R.string.space) + AM_PM;
+        return hourOfDay + getString(R.string.semicolon) + fixMinutes(minute) + " " + AM_PM;
     }
 
     @OnClick(R.id.btnOnboard3Done) public void doneOnboarding() {
         saveSleepGoal();
         saveDays();
+        saveDoneOnBoarding();
 
         Intent intent = new Intent(Onboard3.this, MainActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void saveDoneOnBoarding() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(getString(R.string.DONE_ONBOARDING), true);
+        editor.commit();
     }
 
     private void saveSleepGoal() {

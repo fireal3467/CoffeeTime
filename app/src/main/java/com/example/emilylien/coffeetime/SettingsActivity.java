@@ -153,7 +153,7 @@ public class SettingsActivity extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(SettingsActivity.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                etSleepGoal.setText(hourOfDay + getString(R.string.h_with_space) + fixMinutes(minute) + getString(R.string.m));
+                etSleepGoal.setText(hourOfDay + getString(R.string.h) + " " + fixMinutes(minute) + getString(R.string.m));
             }
         }, hours, mins, true);
         timePickerDialog.show();
