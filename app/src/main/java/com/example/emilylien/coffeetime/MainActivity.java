@@ -184,10 +184,6 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.drawer_add_drink) {
             startAddDrinkActivity();
-        } else if (id == R.id.nav_share) {
-            //TODO - we need stuff here??
-        } else if (id == R.id.nav_send) {
-
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
