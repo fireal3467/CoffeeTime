@@ -61,7 +61,6 @@ public class AddDrinkDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
                 DrinkInfo drink = (DrinkInfo) getArguments().getSerializable(DRINK_CHOICE);
-                System.out.println(getContext().getClass().getName());
                 ((AddDrinkActivity) getContext()).addDrink(drink);
                 dismiss();
             }

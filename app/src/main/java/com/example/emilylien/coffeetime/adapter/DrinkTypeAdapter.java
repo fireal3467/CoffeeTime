@@ -36,13 +36,15 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
         this.drinkList = drinkList;
         this.context = context;
         this.category = category;
-        drinkList.add(new DrinkInfo("Americano", "237 ml", 63, category));
-        drinkList.add(new DrinkInfo("Brewed", "237 ml", 95, category));
-        drinkList.add(new DrinkInfo("Cappucino", "237 ml", 3, category));
-        drinkList.add(new DrinkInfo("Decaf", "237 ml", 63, category));
-        drinkList.add(new DrinkInfo("Espresso", "40 ml", 63, category));
-        drinkList.add(new DrinkInfo("Latte", "237 ml", 63, category));
-        drinkList.add(new DrinkInfo("Macchiato", "237 ml", 63, category));
+        if(category == 1) { //Only do this on the Coffee Tab
+            drinkList.add(new DrinkInfo("Americano", "237 ml", 63, category));
+            drinkList.add(new DrinkInfo("Brewed", "237 ml", 95, category));
+            drinkList.add(new DrinkInfo("Cappucino", "237 ml", 3, category));
+            drinkList.add(new DrinkInfo("Decaf", "237 ml", 63, category));
+            drinkList.add(new DrinkInfo("Espresso", "40 ml", 63, category));
+            drinkList.add(new DrinkInfo("Latte", "237 ml", 63, category));
+            drinkList.add(new DrinkInfo("Macchiato", "237 ml", 63, category));
+        }
     }
 
     @Override
@@ -71,7 +73,6 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
                         drinkList.get(holder.getAdapterPosition()));
                 newDialog.setArguments(bundle);
 
-                //TODO: check this doesn't break anything
                 newDialog.show(((AddDrinkActivity)context).getSupportFragmentManager()
                         , "AddDrink");
             }

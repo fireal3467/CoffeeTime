@@ -116,7 +116,6 @@ public class AddDrinkAdapter extends FragmentPagerAdapter{
                     parentAdapter.showAddDrinkTypeDialog(sectionNumber);
                 }
             });
-
             recyclerView = rootView.findViewById(R.id.recyclerList);
             recyclerView.setHasFixedSize(true);
             recyclerView.setLayoutManager(

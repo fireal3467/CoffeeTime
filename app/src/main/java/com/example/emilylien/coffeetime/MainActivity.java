@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity
         setHalflifeMinutes();
         setMaxCaffine();
 
-
         initDrawerSettings(toolbar);
         initFabSettings();
 
@@ -109,10 +108,6 @@ public class MainActivity extends AppCompatActivity
                 setSleepTimeMinutes();
                 calcCaffineInCurrSystem();
                 maxCaffineCanTake();
-
-
-                //TODO - update current caffine amount;
-
             }
         }.start();
     }
@@ -138,11 +133,24 @@ public class MainActivity extends AppCompatActivity
                 if (id == R.id.fab_add_drink) {
                     startAddDrinkActivity();
                 } else if (id == R.id.recent_one) {
-                    //TODO - call add drink here for the most recent drinks
+                    System.out.println(recentDrinks.size());
+                    if(recentDrinks.size() >= 1){
+                        addDrink(recentDrinks.get(recentDrinks.size() - 1));
+                    }else {
+                        Toast.makeText(MainActivity.this, "No Recent Drink to Add", Toast.LENGTH_SHORT).show();
+                    }
                 } else if (id == R.id.recent_two) {
-
+                    if(recentDrinks.size() >= 2){
+                        addDrink(recentDrinks.get(recentDrinks.size() - 2));
+                    }else {
+                        Toast.makeText(MainActivity.this, "No Recent Drink to Add", Toast.LENGTH_SHORT).show();
+                    }
                 } else if (id == R.id.recent_three) {
-
+                    if(recentDrinks.size() >= 3){
+                        addDrink(recentDrinks.get(recentDrinks.size() - 3));
+                    }else {
+                        Toast.makeText(MainActivity.this, "No Recent Drink to Add", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 fabSpeedDial.closeMenu();
                 return true;
@@ -210,16 +218,16 @@ public class MainActivity extends AppCompatActivity
         TakenDrink takenDrink = new TakenDrink(drink.getCaffineAmount(), nowHours+":" + fixMinutes(nowMins) + " " + AM_PM); //military time
         takenDrinks.add(takenDrink);
         testTakenDrinks.add(takenDrink);
-        drink.setDrinkCategory(-1);
-        recentDrinks.add(drink);
-        saveDrinks(takenDrink, drink);
+        //Create a new drink incase add recent drinks calls the same ID
+        DrinkInfo newDrink =
+                new DrinkInfo(drink.getDrinkName(),drink.getSize(),drink.getCaffineAmount(),-1);
+        recentDrinks.add(newDrink);
+        saveDrinks(takenDrink, newDrink);
 
         calcCaffineInCurrSystem();
         maxCaffineCanTake();
 
-        Toast.makeText(this, drink.getDrinkName(), Toast.LENGTH_SHORT).show();
-
-//        TODO - do something about updating UI and updating the images with the proper things
+        Toast.makeText(this, drink.getDrinkName() + " added", Toast.LENGTH_SHORT).show();
     }
 
     private void saveDrinks(final TakenDrink takenDrink, final DrinkInfo drinkInfo){
@@ -233,8 +241,6 @@ public class MainActivity extends AppCompatActivity
                 id = AppDatabase.getAppDatabase(MainActivity.this).
                         takenDrinkDAO().insertDrink(takenDrink);
                 takenDrink.setDrinkID(id);
-
-                //TODO - have to Update UI, maybe do it here in runUIThread
             }
         }.start();
     }
@@ -260,7 +266,9 @@ public class MainActivity extends AppCompatActivity
         int currCafLevel = 0;
 
         if (takenDrinks != null) {
+            System.out.println("In CalcCaffineCurrSystem");
             for (TakenDrink drink : takenDrinks) {
+                System.out.println("drinking " + drink.getCaffineAmount());
                 DateTimeFormatter formatAmPm = DateTimeFormat.forPattern("hh:mm a");
                 DateTime drankTime = formatAmPm.parseDateTime(drink.getTime());
 
@@ -268,13 +276,14 @@ public class MainActivity extends AppCompatActivity
                 int timeDifferenceDrinkSleep = currTimeMinutes - drankMinute; //6 hour , 12 hours before bedtime
                 float numHalflives = timeDifferenceDrinkSleep/halflifeMinutes; //2 half lives
                 if (numHalflives == 0.0)
-                    currCafLevel = drink.getCaffineAmount();
+                    currCafLevel += drink.getCaffineAmount();
                 else
-                    currCafLevel = (int) (drink.getCaffineAmount()/(2 * numHalflives)); //25mg
+                    currCafLevel += (int) (drink.getCaffineAmount()/(2 * numHalflives)); //25mg
             }
         }
 
         caffineCurrentlySystem = currCafLevel;
+
         setTvCurrInYouText(Integer.toString(caffineCurrentlySystem));
     }
 
@@ -305,6 +314,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setTvCurrInYouText(String currInYouText) {
+        System.out.println(currInYouText);
         this.tvCurrInYou.setText(currInYouText + "mg in body");
     }
 
