@@ -91,31 +91,6 @@ public class MainActivity extends AppCompatActivity
         setSleepTimeMinutes();
         calcCaffineInCurrSystem();
         maxCaffineCanTake();
-
-        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
-        float halflife = sharedPreferences.getFloat(getString(R.string.HALF_LIFE), -1);
-        int min = sharedPreferences.getInt(getString(R.string.MIN), -1);
-        int max = sharedPreferences.getInt(getString(R.string.MAX), -1);
-        String sleepGoal = sharedPreferences.getString(getString(R.string.SLEEP_GOAL), "ERROR");
-        String monday = sharedPreferences.getString("MONDAY", "ERROR"); //-1 is stored in saved preferences when there is no wakeup time
-        String tuesday = sharedPreferences.getString("TUESDAY", "ERROR");
-        String wednesday = sharedPreferences.getString("WEDNESDAY", "ERROR");
-        String thursday = sharedPreferences.getString("THURSDAY", "ERROR");
-        String friday = sharedPreferences.getString("FRIDAY", "ERROR");
-        String saturday = sharedPreferences.getString("SATURDAY", "ERROR");
-        String sunday = sharedPreferences.getString("SUNDAY", "ERROR");
-
-        Log.d("testing", "halflife: " + halflife);
-        Log.d("testing", "min: " + min);
-        Log.d("testing", "max: " + max);
-        Log.d("testing", "sleep goal: " + sleepGoal);
-        Log.d("testing", "monday: " + monday);
-        Log.d("testing", "tuesday: " + tuesday);
-        Log.d("testing", "wednesday: " + wednesday);
-        Log.d("testing", "thursday: " + thursday);
-        Log.d("testing", "friday: " + friday);
-        Log.d("testing", "saturday: " + saturday);
-        Log.d("testing", "sunday: " + sunday);
     }
 
     private void initLists(){
