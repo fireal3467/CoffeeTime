@@ -82,15 +82,6 @@ public class MainActivity extends AppCompatActivity
 
         calcCaffineInCurrSystem();
         maxCaffineCanTake();
-
-
-
-
-        if (takenDrinks != null) {
-            for (int i = 0; i < takenDrinks.size(); i++) {
-                Log.d("dranks", "drank " + i);
-            }
-        }
     }
 
     @Override
@@ -100,13 +91,6 @@ public class MainActivity extends AppCompatActivity
         setSleepTimeMinutes();
         calcCaffineInCurrSystem();
         maxCaffineCanTake();
-
-
-        if (takenDrinks != null) {
-            for (int i = 0; i < takenDrinks.size(); i++) {
-                Log.d("dranks", "drank " + i);
-            }
-        }
     }
 
     private void initLists(){
@@ -184,6 +168,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.drawer_add_drink) {
             startAddDrinkActivity();
+        } else if (id == R.id.drawer_settings) {
+            Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -294,24 +281,20 @@ public class MainActivity extends AppCompatActivity
     public void maxCaffineCanTake() {
         if (!sleepIn) {
             int bedTimeByTotalMinutes = sleepTimeMinutes;
-            Log.d("maxlog", "sleepTimeMinutes: " + bedTimeByTotalMinutes);
+
             if (bedTimeByTotalMinutes < 720) {
                 bedTimeByTotalMinutes += 1440; //if its in the am, add minutes
             }
-            Log.d("maxlog", "bedTimeByTotalMinutes: " + bedTimeByTotalMinutes);
 
             //TODO - this needs to be fixed with the right time
             DateTime now = new DateTime();
             int timeDifferenceNowSleep = bedTimeByTotalMinutes - now.getMinuteOfDay(); //how much time left before bedtime
-            Log.d("maxlog", "timeDifferenceNowSleep: " + timeDifferenceNowSleep);
             float numHalflives = timeDifferenceNowSleep / halflifeMinutes; //12 hours until bed, 6 hours is halftime, 2 half lives
-            Log.d("maxlog", "numHalflives: " + numHalflives);
             float maxCaffineCanTake = (maxCaffine - caffineCurrentlySystem) / (2 * numHalflives); //you can take 400mg, subtract the 100mg in you then multiply it by two half lives
             maxCaffine = (int) maxCaffineCanTake;
 
-            if (maxCaffineCanTake >= 0) {
+            if (maxCaffineCanTake > 0) {
                 String displayMaxCaffiene = Integer.toString(maxCaffine);
-                Log.d("maxlog", "maxCaffineCanTake: " + displayMaxCaffiene);
                 setTvHowMuchMore(displayMaxCaffiene);
             } else {
                 tvHowMuchMore.setText("Time to stop drinking");
@@ -364,26 +347,12 @@ public class MainActivity extends AppCompatActivity
         DateTimeFormatter sleepGoalFormat = DateTimeFormat.forPattern("hh'h' mm'm'");
         DateTime sleepGoalDate = sleepGoalFormat.parseDateTime(sleepGoal);
         int sleepGoalHours = sleepGoalDate.getHourOfDay();
-        int sleepGoalMins = sleepGoalDate.getMinuteOfHour();
 
         //get wakeup time
         DateTimeFormatter wakeUpFormat = DateTimeFormat.forPattern("hh:mm a");
         DateTime wakeupDate = wakeUpFormat.parseDateTime(tomorrowsWakeup);
-        int wakeupHours = wakeupDate.getHourOfDay();
-        int wakeupMins = wakeupDate.getMinuteOfHour();
 
         //calculate bedtime
-        int bedTimeHour = wakeupDate.minusHours(sleepGoalHours).getHourOfDay();
-        String AM_PM = "";
-        if (bedTimeHour < 12) {
-            AM_PM = "AM";
-        } else {
-            AM_PM = "PM";
-            bedTimeHour -= 12;
-        }
-
-        String bedTimeMins = fixMinutes(wakeupDate.minusMinutes(sleepGoalMins).getMinuteOfHour());
-        Log.d("maxlog", "bedtime: " + bedTimeHour + ":" + bedTimeMins);
         return wakeupDate.minusHours(sleepGoalHours).getMinuteOfDay();
     }
 
@@ -393,7 +362,6 @@ public class MainActivity extends AppCompatActivity
         String wakeupTime = "";
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
-        Log.d("dayday", "" + day);
         switch (day) {
             case 0: // Sunday, so get monday
                 wakeupTime = sharedPreferences.getString("MONDAY", "ERROR");

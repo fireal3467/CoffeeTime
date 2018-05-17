@@ -10,6 +10,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
+
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+        </activity>
+        <activity
+            android:name=".onboard.Onboard1"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
 
@@ -17,38 +27,31 @@
             <!--</intent-filter>-->
         </activity>
         <activity
-            android:name=".onboard.Onboard1"
+            android:name=".onboard.Onboard2"
+            android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
+             <!--<intent-filter> -->
+                <!--<action android:name="android.intent.action.MAIN" /> -->
+                <!--<category android:name="android.intent.category.LAUNCHER" /> -->
+             <!--</intent-filter> -->
+        </activity>
+        <activity
+            android:name=".onboard.Onboard3"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
+
              <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
              <!--</intent-filter>-->
         </activity>
         <activity
-            android:name=".onboard.Onboard2"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|stateHidden" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".onboard.Onboard3"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
-
-        <activity
             android:name=".AddDrinkActivity"
             android:label="@string/title_activity_add_drink"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>
