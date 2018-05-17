@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.example.emilylien.coffeetime.MainActivity;
 import com.example.emilylien.coffeetime.R;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
@@ -25,6 +26,18 @@ public class Onboard1 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_on_board1);
         ButterKnife.bind(this);
+
+        checkIfHasOnboarded();
+    }
+
+    private void checkIfHasOnboarded() {
+        SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
+        boolean hasOnboarded = sharedPreferences.getBoolean(getString(R.string.DONE_ONBOARDING), false);
+        if (hasOnboarded) {
+            Intent intent = new Intent(Onboard1.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @OnClick(R.id.btnOnboard1Next) void clickedNext() {

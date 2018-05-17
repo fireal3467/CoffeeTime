@@ -15,7 +15,7 @@
     <string name="teen_recommended_max">100mg</string>
     <string name="adult_recommended_max">400mg</string>
     <string name="pregnant_recommended_max">200mg</string>
-    <string name="h_with_space">h</string>
+    <string name="h">h</string>
     <string name="m">m</string>
     <string name="PM">PM</string>
     <string name="AM">AM</string>
@@ -25,11 +25,11 @@
     <string name="SUNDAY">SUNDAY</string>
     <string name="SATURDAY">SATURDAY</string>
     <string name="FRIDAY">FRIDAY</string>
-    <string name="FRIDAY">FRIDAY</string>
     <string name="THURSDAY">THURSDAY</string>
     <string name="WEDNESDAY">WEDNESDAY</string>
     <string name="TUESDAY">TUESDAY</string>
     <string name="MONDAY">MONDAY</string>
     <string name="space" />
+    <string name="DONE_ONBOARDING">DONE_ONBOARDING</string>
 
 </resources>
