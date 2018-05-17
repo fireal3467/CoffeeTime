@@ -53,35 +53,44 @@ public class Onboard3 extends AppCompatActivity {
         setContentView(R.layout.activity_on_board3);
         ButterKnife.bind(this);
 
-        days = new MaterialEditText[] {etMonday, etTuesday, etWednesday, etThursday, etFriday, etSaturday, etSunday};
+        setUpEtDays();
+        setUpEtSleepGoalListener();
+    }
 
-        for (final MaterialEditText day : days) {
-            day.setOnTouchListener(new View.OnTouchListener(){
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        int inType = day.getInputType(); // backup the input type
-                        day.setInputType(InputType.TYPE_NULL); // disable soft input
-                        day.onTouchEvent(event); // call native handler
-                        day.setInputType(inType); // restore input type
+    private void disableKeyboard(MaterialEditText etText, MotionEvent event) {
+        int inType = etText.getInputType(); // backup the input type
+        etText.setInputType(InputType.TYPE_NULL); // disable soft input
+        etText.onTouchEvent(event); // call native handler
+        etText.setInputType(inType); // restore input type
+    }
 
-                        showTimePickerDay(day);
-                    }
-                    return true; // consume touch event
-                }
-            });
-        }
-
+    private void setUpEtSleepGoalListener() {
         etSleepGoal.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    int inType = etSleepGoal.getInputType(); // backup the input type
-                    etSleepGoal.setInputType(InputType.TYPE_NULL); // disable soft input
-                    etSleepGoal.onTouchEvent(event); // call native handler
-                    etSleepGoal.setInputType(inType); // restore input type
-
+                    disableKeyboard(etSleepGoal, event);
                     showTimePickerSleepGoal();
+                }
+                return true; // consume touch event
+            }
+        });
+    }
+
+    private void setUpEtDays() {
+        days = new MaterialEditText[] {etMonday, etTuesday, etWednesday, etThursday, etFriday, etSaturday, etSunday};
+        for (final MaterialEditText day : days) {
+            setUpEtDaysListener(day);
+        }
+    }
+
+    private void setUpEtDaysListener(final MaterialEditText day) {
+        day.setOnTouchListener(new View.OnTouchListener(){
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    disableKeyboard(day, event);
+                    showTimePickerDay(day);
                 }
                 return true; // consume touch event
             }
@@ -96,7 +105,7 @@ public class Onboard3 extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(Onboard3.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                etSleepGoal.setText(hourOfDay + "h " + fixMinutes(minute) + "m");
+                etSleepGoal.setText(hourOfDay + getString(R.string.h_with_space) + fixMinutes(minute) + getString(R.string.m));
             }
         }, hours, mins, true);
         timePickerDialog.show();
@@ -110,18 +119,23 @@ public class Onboard3 extends AppCompatActivity {
         TimePickerDialog timePickerDialog = new TimePickerDialog(Onboard3.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                String AM_PM;
-                if (hourOfDay > 12) {
-                    AM_PM = "PM";
-                    hourOfDay -= 12;
-                } else {
-                    AM_PM = "AM";
-                }
-
-                day.setText(hourOfDay + ":" + fixMinutes(minute) + " " + AM_PM);
+                String time = turnToTimeString(hourOfDay, minute);
+                day.setText(time);
             }
         }, hours, mins, false);
         timePickerDialog.show();
+    }
+
+    private String turnToTimeString(int hourOfDay, int minute) {
+        String AM_PM;
+        if (hourOfDay > 12) {
+            AM_PM = getString(R.string.PM);
+            hourOfDay -= 12;
+        } else {
+            AM_PM = getString(R.string.AM);
+        }
+
+        return hourOfDay + getString(R.string.semicolon) + fixMinutes(minute) + " " + AM_PM;
     }
 
     @OnClick(R.id.btnOnboard3Done) public void doneOnboarding() {
@@ -149,12 +163,11 @@ public class Onboard3 extends AppCompatActivity {
 
     private void saveDays() {
         for (MaterialEditText day : days) {
-            String wakeupTime = "SLEEP_IN";
+            String wakeupTime = getString(R.string.SLEEP_IN);
             String currDayString = day.getHint().toString().toUpperCase();
             String dayText = day.getText().toString();
-            if (!dayText.matches("")) {
-                wakeupTime = day.getText().toString();
-            }
+            if (!dayText.matches(""))
+                wakeupTime = dayText;
 
             SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();

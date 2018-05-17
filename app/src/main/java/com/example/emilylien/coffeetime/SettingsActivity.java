@@ -44,9 +44,9 @@ public class SettingsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         SharedPreferences sharedPreferences = this.getSharedPreferences(getString(R.string.USER_SETTINGS), Context.MODE_PRIVATE);
-        float halflife = sharedPreferences.getFloat(getString(R.string.HALF_LIFE), -1);
-        int min = sharedPreferences.getInt(getString(R.string.MIN), -1);
-        int max = sharedPreferences.getInt(getString(R.string.MAX), -1);
+        loadHalfLife(sharedPreferences);
+        loadMin(sharedPreferences);
+        loadMax(sharedPreferences);
         String sleepGoal = sharedPreferences.getString(getString(R.string.SLEEP_GOAL), "ERROR");
         String monday = sharedPreferences.getString("MONDAY", "ERROR"); //-1 is stored in saved preferences when there is no wakeup time
         String tuesday = sharedPreferences.getString("TUESDAY", "ERROR");
@@ -63,11 +63,7 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public boolean onTouch(View v, MotionEvent event) {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        int inType = day.getInputType(); // backup the input type
-                        day.setInputType(InputType.TYPE_NULL); // disable soft input
-                        day.onTouchEvent(event); // call native handler
-                        day.setInputType(inType); // restore input type
-
+                        disableKeyboard(day, event);
                         showTimePickerDay(day);
                     }
                     return true; // consume touch event
@@ -79,25 +75,12 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    int inType = etSleepGoal.getInputType(); // backup the input type
-                    etSleepGoal.setInputType(InputType.TYPE_NULL); // disable soft input
-                    etSleepGoal.onTouchEvent(event); // call native handler
-                    etSleepGoal.setInputType(inType); // restore input type
-
+                    disableKeyboard(etSleepGoal, event);
                     showTimePickerSleepGoal();
                 }
                 return true; // consume touch event
             }
         });
-
-        if (halflife != -1)
-            etHalfLife.setText(Float.toString(halflife));
-
-        if (max != -1)
-            etMaximum.setText(Integer.toString(max));
-
-        if (min != -1)
-            etMinimum.setText(Integer.toString(min));
 
         if (!sleepGoal.equals("ERROR"))
             etSleepGoal.setText(sleepGoal);
@@ -122,6 +105,24 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (!sunday.equals("ERROR"))
             etSunday.setText(sunday);
+    }
+
+    private void loadMin(SharedPreferences sharedPreferences) {
+        int min = sharedPreferences.getInt(getString(R.string.MIN), -1);
+        if (min != -1)
+            etMinimum.setText(Integer.toString(min));
+    }
+
+    private void loadMax(SharedPreferences sharedPreferences) {
+        int max = sharedPreferences.getInt(getString(R.string.MAX), -1);
+        if (max != -1)
+            etMaximum.setText(Integer.toString(max));
+    }
+
+    private void loadHalfLife(SharedPreferences sharedPreferences) {
+        float halflife = sharedPreferences.getFloat(getString(R.string.HALF_LIFE), -1);
+        if (halflife != -1)
+            etHalfLife.setText(Float.toString(halflife));
     }
 
     private void showTimePickerSleepGoal() {
@@ -180,7 +181,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void saveDays() {
         for (MaterialEditText day : days) {
-            String wakeupTime = "SLEEP_IN";
+            String wakeupTime = getString(R.string.SLEEP_IN);
             String currDayString = day.getHint().toString().toUpperCase();
             String dayText = day.getText().toString();
             if (!dayText.matches("")) {
@@ -227,5 +228,12 @@ public class SettingsActivity extends AppCompatActivity {
         saveDays();
 
         finish();
+    }
+
+    private void disableKeyboard(MaterialEditText etText, MotionEvent event) {
+        int inType = etText.getInputType(); // backup the input type
+        etText.setInputType(InputType.TYPE_NULL); // disable soft input
+        etText.onTouchEvent(event); // call native handler
+        etText.setInputType(inType); // restore input type
     }
 }
