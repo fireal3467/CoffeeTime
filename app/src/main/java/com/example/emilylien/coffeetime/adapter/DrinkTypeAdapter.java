@@ -36,7 +36,7 @@ public class DrinkTypeAdapter extends RecyclerView.Adapter<DrinkTypeAdapter.View
         this.drinkList = drinkList;
         this.context = context;
         this.category = category;
-        if(category == 1) { //Only do this on the Coffee Tab
+        if(category == 0) { //Only do this on the Coffee Tab
             drinkList.add(new DrinkInfo("Americano", "237 ml", 63, category));
             drinkList.add(new DrinkInfo("Brewed", "237 ml", 95, category));
             drinkList.add(new DrinkInfo("Cappucino", "237 ml", 3, category));

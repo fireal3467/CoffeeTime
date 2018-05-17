@@ -12,7 +12,7 @@
         android:layout_margin="15dp"
         android:gravity="center_horizontal"
         android:textSize="32dp"
-        android:text="drink name"/>
+        android:hint="Drink Name"/>
 
     <EditText
         android:id="@+id/etDrinkSize"
@@ -21,7 +21,7 @@
         android:layout_margin="15dp"
         android:gravity="center_horizontal"
         android:textSize="32dp"
-        android:text="drink amount"/>
+        android:hint="Drink Size"/>
 
     <EditText
         android:id="@+id/etCaffineAmount"
@@ -29,8 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:gravity="center_horizontal"
+        android:inputType="number"
         android:textSize="32dp"
-        android:text="caffine amount"/>
+        android:hint="Caffine Amount" />
 
     <LinearLayout
         android:layout_width="match_parent"

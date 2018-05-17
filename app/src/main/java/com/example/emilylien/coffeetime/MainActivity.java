@@ -266,9 +266,7 @@ public class MainActivity extends AppCompatActivity
         int currCafLevel = 0;
 
         if (takenDrinks != null) {
-            System.out.println("In CalcCaffineCurrSystem");
             for (TakenDrink drink : takenDrinks) {
-                System.out.println("drinking " + drink.getCaffineAmount());
                 DateTimeFormatter formatAmPm = DateTimeFormat.forPattern("hh:mm a");
                 DateTime drankTime = formatAmPm.parseDateTime(drink.getTime());
 
@@ -295,7 +293,6 @@ public class MainActivity extends AppCompatActivity
                 bedTimeByTotalMinutes += 1440; //if its in the am, add minutes
             }
 
-            //TODO - this needs to be fixed with the right time
             DateTime now = new DateTime();
             int timeDifferenceNowSleep = bedTimeByTotalMinutes - now.getMinuteOfDay(); //how much time left before bedtime
             float numHalflives = timeDifferenceNowSleep / halflifeMinutes; //12 hours until bed, 6 hours is halftime, 2 half lives
@@ -314,7 +311,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void setTvCurrInYouText(String currInYouText) {
-        System.out.println(currInYouText);
         this.tvCurrInYou.setText(currInYouText + "mg in body");
     }
 
